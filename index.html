@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jawad Kazimi — Digital Marketing Spezialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Outfit:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF7F2;--cream2:#F2EDE4;--paper:#FFFCF8;--ink:#1A1612;--ink2:#2D2822;--gold:#B8873A;--gold2:#D4A855;--gold-pale:#F5E9D0;--coral:#E8634A;--sage:#5A8A72;--sky:#3A7CC8;--muted:#8A8278;--border:rgba(184,135,58,0.2);--border2:rgba(26,22,18,0.1);--shadow:0 4px 40px rgba(26,22,18,0.08);--shadow-lg:0 20px 60px rgba(26,22,18,0.14)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'Outfit',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;cursor:none}
+.cursor{position:fixed;width:8px;height:8px;background:var(--coral);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:multiply}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .12s ease-out,width .25s,height .25s;mix-blend-mode:multiply}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 4rem;display:flex;align-items:center;justify-content:space-between;background:rgba(250,247,242,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border2)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--ink)}.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:500;transition:color .25s}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 4rem 5rem;background:var(--paper)}
+.hero-circle{position:absolute;right:-10rem;top:50%;transform:translateY(-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,var(--gold-pale) 0%,transparent 68%);z-index:0}
+.hero-line{position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,transparent,var(--gold),var(--gold2),transparent)}
+.hero-content{position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%}
+.hero-pill{display:inline-flex;align-items:center;gap:0.6rem;background:var(--gold-pale);border:1px solid rgba(184,135,58,0.3);padding:0.4rem 1.1rem;border-radius:100px;font-size:0.72rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;font-weight:600;margin-bottom:2rem}
+.hero-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--coral);display:block;animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-name{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,9vw,8rem);font-weight:700;line-height:0.92;color:var(--ink);margin-bottom:1rem;letter-spacing:-0.02em}
+.hero-name em{font-style:italic;font-weight:300;background:linear-gradient(135deg,var(--gold),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-role{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero-tagline{font-size:1.05rem;color:var(--muted);max-width:460px;font-weight:300;line-height:1.85;margin-bottom:2.5rem}
+.hero-tagline strong{color:var(--ink);font-weight:600}
+.hero-actions{display:flex;align-items:center;gap:1.5rem}
+.btn-primary{display:inline-flex;align-items:center;gap:0.6rem;background:var(--ink);color:var(--paper);padding:0.85rem 2rem;font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:4px;transition:all .3s;border:2px solid var(--ink)}
+.btn-primary:hover{background:var(--gold);border-color:var(--gold)}
+.btn-outline{display:inline-flex;align-items:center;gap:0.6rem;color:var(--ink);border:2px solid var(--border2);padding:0.85rem 2rem;font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border-radius:4px;transition:all .3s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.hero-stats{display:flex;gap:3.5rem;margin-top:4rem;padding-top:2.5rem;border-top:1px solid var(--border2)}
+.stat{display:flex;flex-direction:column;gap:0.2rem}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--ink);line-height:1}
+.stat-label{font-size:0.7rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+.scroll-hint{position:absolute;bottom:2.5rem;left:4rem;display:flex;align-items:center;gap:1rem;font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase}
+.scroll-line{width:48px;height:1px;background:linear-gradient(to right,var(--gold),transparent)}
+section{padding:7rem 4rem}
+.container{max-width:1100px;margin:0 auto}
+.sec-eyebrow{font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.8rem}
+.sec-eyebrow::before{content:'';width:2rem;height:1px;background:var(--gold)}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:700;line-height:1.15;margin-bottom:1rem;color:var(--ink)}
+.sec-title em{font-style:italic;font-weight:300;color:var(--gold)}
+#story{background:var(--paper)}
+.story-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:6rem;margin-top:4rem;align-items:start}
+.story-text p{color:var(--muted);margin-bottom:1.2rem;font-size:1rem;line-height:1.9}
+.story-text p strong{color:var(--ink);font-weight:600}
+.pullquote{border-left:3px solid var(--gold);padding:1.5rem 2rem;background:var(--gold-pale);border-radius:0 8px 8px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;line-height:1.6;color:var(--ink2);margin-bottom:2rem}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:0.5rem}
+.chip{display:inline-flex;align-items:center;gap:0.4rem;background:var(--cream2);border:1px solid var(--border2);padding:0.35rem 0.9rem;border-radius:100px;font-size:0.75rem;color:var(--ink2);font-weight:500}
+.chip.gold{background:var(--gold-pale);border-color:rgba(184,135,58,0.35);color:var(--gold)}
+.numbers-band{background:var(--ink2);padding:5rem 4rem}
+.numbers-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.06)}
+.num-box{background:var(--ink2);padding:3rem 2rem;text-align:center}
+.num-big{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:0.6rem}
+.num-label{font-size:0.78rem;color:rgba(255,255,255,0.45);letter-spacing:0.08em;line-height:1.5}
+#journey{background:var(--cream)}
+.tl-wrap{margin-top:4rem}
+.tl-item{display:grid;grid-template-columns:160px 1px 1fr;gap:0 2rem;margin-bottom:0}
+.tl-left{text-align:right;padding:0 0 3rem}
+.tl-date{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--gold);letter-spacing:0.06em;margin-bottom:0.3rem;display:block}
+.tl-type{font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase}
+.tl-spine{display:flex;flex-direction:column;align-items:center;padding-bottom:3rem}
+.tl-dot-outer{width:14px;height:14px;border-radius:50%;border:2px solid var(--gold);background:var(--paper);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:0.2rem;position:relative;z-index:1}
+.tl-dot-inner{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.tl-spine-line{flex:1;width:1px;background:linear-gradient(to bottom,var(--border),var(--border2))}
+.tl-item:last-child .tl-spine-line{display:none}
+.tl-body{padding:0 0 3rem}
+.tl-card{background:var(--paper);border:1px solid var(--border2);border-radius:12px;padding:1.8rem 2rem;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s}
+.tl-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.tl-card-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:0.2rem}
+.tl-card-org{font-size:0.8rem;color:var(--gold);font-weight:600;margin-bottom:0.8rem}
+.tl-card-desc{font-size:0.88rem;color:var(--muted);line-height:1.75;margin-bottom:1rem}
+.tl-pill{display:inline-flex;align-items:center;background:var(--gold-pale);border:1px solid rgba(184,135,58,0.3);color:var(--gold);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.8rem;border-radius:100px;margin-right:0.4rem;margin-top:0.2rem;font-weight:600}
+.tl-pill.sage{background:rgba(90,138,114,0.1);border-color:rgba(90,138,114,0.3);color:var(--sage)}
+.tl-pill.sky{background:rgba(58,124,200,0.1);border-color:rgba(58,124,200,0.3);color:var(--sky)}
+#projekte{background:var(--paper)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.proj-card{background:var(--cream);border:1px solid var(--border2);border-radius:16px;padding:2.5rem 2rem;position:relative;overflow:hidden;transition:all .35s}
+.proj-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--gold),var(--coral));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.proj-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);background:var(--paper)}
+.proj-card:hover::after{transform:scaleX(1)}
+.proj-num{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);margin-bottom:1.5rem;letter-spacing:0.1em}
+.proj-icon{width:48px;height:48px;border-radius:12px;background:var(--gold-pale);border:1px solid rgba(184,135,58,0.25);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.2rem}
+.proj-name{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:var(--ink);margin-bottom:0.7rem}
+.proj-desc{font-size:0.85rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem}
+.tag-row{display:flex;flex-wrap:wrap;gap:0.4rem}
+.ptag{font-size:0.65rem;letter-spacing:0.09em;text-transform:uppercase;padding:0.22rem 0.7rem;border-radius:100px;font-weight:600}
+.ptag-gold{background:var(--gold-pale);color:var(--gold)}
+.ptag-sage{background:rgba(90,138,114,0.12);color:var(--sage)}
+.ptag-sky{background:rgba(58,124,200,0.1);color:var(--sky)}
+.ptag-coral{background:rgba(232,99,74,0.1);color:var(--coral)}
+#skills{background:var(--cream2)}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:4rem;align-items:start}
+.skill-group{margin-bottom:2.5rem}
+.skill-group-label{font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:1.2rem;padding-bottom:0.6rem;border-bottom:1px solid var(--border2)}
+.skill-item{margin-bottom:1.1rem}
+.skill-row{display:flex;justify-content:space-between;margin-bottom:0.4rem}
+.skill-name{font-size:0.88rem;color:var(--ink);font-weight:500}
+.skill-pct{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--gold)}
+.skill-track{height:3px;background:var(--border2);border-radius:10px;overflow:hidden}
+.skill-fill{height:100%;width:0;background:linear-gradient(to right,var(--gold),var(--coral));border-radius:10px;transition:width 1.3s cubic-bezier(0.4,0,0.2,1)}
+.skill-fill.animated{width:var(--w)}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.lang-card{background:var(--paper);border:1px solid var(--border2);border-radius:10px;padding:1.2rem;box-shadow:var(--shadow)}
+.lang-flag{font-size:1.5rem;margin-bottom:0.4rem}
+.lang-name{font-size:0.9rem;font-weight:600;color:var(--ink)}
+.lang-lvl{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--gold);margin-top:0.15rem}
+.lang-dots{display:flex;gap:4px;margin-top:0.6rem}
+.ldot{width:18px;height:3px;border-radius:10px;background:var(--border2)}
+.ldot.on{background:linear-gradient(to right,var(--gold),var(--gold2))}
+#kontakt{background:var(--paper)}
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem;margin-top:4rem;align-items:start}
+.contact-lead{font-size:1rem;color:var(--muted);line-height:1.9;margin-bottom:2.5rem}
+.contact-detail{display:flex;align-items:center;gap:1rem;margin-bottom:1.1rem}
+.contact-icon-box{width:40px;height:40px;background:var(--gold-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.contact-info{font-size:0.9rem;color:var(--ink)}
+.contact-info small{display:block;font-size:0.72rem;color:var(--muted)}
+.cform{display:flex;flex-direction:column;gap:1rem}
+.cform-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cfield{display:flex;flex-direction:column;gap:0.4rem}
+.clabel{font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.14em;text-transform:uppercase}
+.cinput,.ctextarea{background:var(--cream);border:1.5px solid var(--border2);color:var(--ink);padding:0.8rem 1rem;border-radius:8px;font-family:'Outfit',sans-serif;font-size:0.9rem;outline:none;resize:none;transition:border-color .25s,box-shadow .25s}
+.cinput:focus,.ctextarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,135,58,0.12)}
+.cbtn{align-self:flex-start;display:inline-flex;align-items:center;gap:0.6rem;background:linear-gradient(135deg,var(--gold),var(--coral));color:white;padding:0.9rem 2.2rem;border:none;border-radius:8px;font-family:'Outfit',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:none;transition:opacity .25s,transform .2s;margin-top:0.5rem}
+.cbtn:hover{opacity:0.9;transform:translateY(-2px)}
+footer{background:var(--ink2);padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center}
+.footer-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--cream);font-weight:700}
+.footer-name span{color:var(--gold2);font-style:italic}
+.footer-copy{font-size:0.75rem;color:rgba(255,255,255,0.3)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:0.72rem;color:rgba(255,255,255,0.4);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color .2s}
+.footer-links a:hover{color:var(--gold2)}
+.reveal,.reveal-r{opacity:0;transition:opacity .9s ease,transform .9s ease}
+.reveal{transform:translateY(28px)}.reveal-r{transform:translateX(28px)}
+.reveal.visible,.reveal-r.visible{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
+<nav>
+  <div class="nav-logo">Jawad <span>Kazimi</span></div>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li><li><a href="#journey">Werdegang</a></li>
+    <li><a href="#projekte">Projekte</a></li><li><a href="#skills">Expertise</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+</nav>
+<section class="hero" id="hero">
+  <div class="hero-circle"></div><div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-pill">Verfügbar für neue Projekte</div>
+    <h1 class="hero-name">Jawad<br><em>Kazimi</em></h1>
+    <div class="hero-role">Digital Marketing Spezialist · SEO · SEM · Berlin</div>
+    <p class="hero-tagline">Ich bringe Marken dorthin, wo ihre Kunden suchen — auf Seite 1. <strong>Datenbasiert. Messbar. Wirksam.</strong></p>
+    <div class="hero-actions">
+      <a href="#kontakt" class="btn-primary">Jetzt kontaktieren →</a>
+      <a href="#projekte" class="btn-outline">Projekte ansehen</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num" data-count="2">0</span><span class="stat-label">Jahre Erfahrung</span></div>
+      <div class="stat"><span class="stat-num" data-count="4">0</span><span class="stat-label">Projekte live</span></div>
+      <div class="stat"><span class="stat-num" data-count="4">0</span><span class="stat-label">Sprachen</span></div>
+      <div class="stat"><span class="stat-num" data-count="3">0</span><span class="stat-label">Abschlüsse</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+<section id="story">
+  <div class="container">
+    <div class="sec-eyebrow reveal">Über mich</div>
+    <h2 class="sec-title reveal">Von Kabul nach Berlin —<br><em>eine Geschichte</em> über Wachstum</h2>
+    <div class="story-grid">
+      <div class="story-text reveal">
+        <p>Ich bin in Afghanistan aufgewachsen, habe in Indien einen MBA abgeschlossen und bin heute in Berlin — der Stadt der Möglichkeiten — ansässig. Mein Weg ist nicht geradlinig. Aber genau das hat mich gelehrt, was Marketing im Kern bedeutet: <strong>Anpassungsfähigkeit, Beharrlichkeit und der Mut, neue Märkte zu erschließen.</strong></p>
+        <p>Als Digital Marketing Spezialist mit einem MSc in Digital Marketing (BSBI Berlin, UCA) verbinde ich akademisches Fachwissen mit echter Praxiserfahrung. Ich habe Websites gebaut, SEO-Strategien umgesetzt und Kampagnen auf Google, Meta und TikTok gesteuert — stets mit Blick auf die Zahlen, die wirklich zählen.</p>
+        <p>Ich bin <strong>Gründer von Market Trend</strong>, einem KI-gestützten Tool, das Marketern hilft, täglich relevante Content-Ideen zu generieren. Denn wer den Trend versteht, gewinnt das Rennen um Aufmerksamkeit.</p>
+      </div>
+      <div class="reveal-r d2">
+        <div class="pullquote">„Sichtbarkeit ist kein Zufall — sie ist das Ergebnis von Strategie, Daten und der richtigen Botschaft zur richtigen Zeit."</div>
+        <div class="tag-cloud">
+          <span class="chip">🇦🇫 Kabul</span><span class="chip gold">Bachelor Agribusiness</span>
+          <span class="chip">🇮🇳 MBA Chandigarh</span><span class="chip gold">Marketing Executive</span>
+          <span class="chip">🇩🇪 Berlin 2023</span><span class="chip gold">MSc Digital Marketing</span>
+          <span class="chip">🚀 Market Trend</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="numbers-band">
+  <div class="numbers-inner">
+    <div class="num-box reveal"><div class="num-big" data-count="3">0</div><div class="num-label">Live-Websites<br>als Freelancer gebaut</div></div>
+    <div class="num-box reveal d1"><div class="num-big" data-count="4">0</div><div class="num-label">Sprachen<br>fließend gesprochen</div></div>
+    <div class="num-box reveal d2"><div class="num-big" data-count="2">0</div><div class="num-label">Jahre bei ACME<br>Marketing Executive</div></div>
+    <div class="num-box reveal d3"><div class="num-big" data-count="1">0</div><div class="num-label">KI-Tool<br>selbst gegründet</div></div>
+  </div>
+</div>
+<section id="journey">
+  <div class="container">
+    <div class="sec-eyebrow reveal">Werdegang</div>
+    <h2 class="sec-title reveal">Der <em>Weg,</em> der<br>mich hierher brachte</h2>
+    <div class="tl-wrap">
+      <div class="tl-item reveal">
+        <div class="tl-left"><span class="tl-date">2024 – laufend</span><span class="tl-type">Bildung</span></div>
+        <div class="tl-spine"><div class="tl-dot-outer"><div class="tl-dot-inner"></div></div><div class="tl-spine-line"></div></div>
+        <div class="tl-body"><div class="tl-card">
+          <div class="tl-card-title">MSc in Digital Marketing (UCA)</div>
+          <div class="tl-card-org">Berlin School of Business and Innovation (BSBI)</div>
+          <div class="tl-card-desc">Vertiefung in Performance Marketing, Datenanalyse und digitaler Strategie. Voraussichtlicher Abschluss: September 2025.</div>
+          <span class="tl-pill">Laufend · Sep 2025</span><span class="tl-pill sky">Berlin</span>
+        </div></div>
+      </div>
+      <div class="tl-item reveal d1">
+        <div class="tl-left"><span class="tl-date">Jul – Sep 2025</span><span class="tl-type">Freelance</span></div>
+        <div class="tl-spine"><div class="tl-dot-outer"><div class="tl-dot-inner"></div></div><div class="tl-spine-line"></div></div>
+        <div class="tl-body"><div class="tl-card">
+          <div class="tl-card-title">Freiberuflicher Webdesigner & SEO-Spezialist</div>
+          <div class="tl-card-org">Projekt: globalux.de</div>
+          <div class="tl-card-desc">Responsive Website, On-Page-SEO-Optimierung und Steuerung von Google/Meta-Kampagnen. Verbesserung der Rankings auf Seite 1 und Steigerung des organischen Traffics.</div>
+          <span class="tl-pill">SEO</span><span class="tl-pill">Google Ads</span><span class="tl-pill sky">Meta</span>
+        </div></div>
+      </div>
+      <div class="tl-item reveal d1">
+        <div class="tl-left"><span class="tl-date">Jan – Mär 2025</span><span class="tl-type">Freelance</span></div>
+        <div class="tl-spine"><div class="tl-dot-outer"><div class="tl-dot-inner"></div></div><div class="tl-spine-line"></div></div>
+        <div class="tl-body"><div class="tl-card">
+          <div class="tl-card-title">Freiberuflicher Webdesigner & SEO-Spezialist</div>
+          <div class="tl-card-org">Projekt: tidyhomeservice.de</div>
+          <div class="tl-card-desc">Kompletter Webauftritt mit responsivem Design, Keyword-Recherche, Meta-Tags und technischen SEO-Maßnahmen. Organische Sichtbarkeit messbar gesteigert.</div>
+          <span class="tl-pill">WordPress</span><span class="tl-pill sage">Analytics</span><span class="tl-pill">On-Page SEO</span>
+        </div></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-left"><span class="tl-date">Mai 2021 – Mai 2023</span><span class="tl-type">Vollzeit</span></div>
+        <div class="tl-spine"><div class="tl-dot-outer"><div class="tl-dot-inner"></div></div><div class="tl-spine-line"></div></div>
+        <div class="tl-body"><div class="tl-card">
+          <div class="tl-card-title">Digital Marketing Executive</div>
+          <div class="tl-card-org">ACME HR Consulting</div>
+          <div class="tl-card-desc">Gesamte digitale Präsenz: Website-Management, SEO, Social Media (Facebook, Instagram, LinkedIn) und kreative Kampagnen. Grafiken, Poster und zielgruppengerechte Inhalte zur Steigerung von Markenbekanntheit und Engagement.</div>
+          <span class="tl-pill">2 Jahre Vollzeit</span><span class="tl-pill sage">Social Media</span><span class="tl-pill sky">Kampagnen</span>
+        </div></div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-left"><span class="tl-date">2019 – 2021</span><span class="tl-type">Bildung</span></div>
+        <div class="tl-spine"><div class="tl-dot-outer"><div class="tl-dot-inner"></div></div><div class="tl-spine-line"></div></div>
+        <div class="tl-body"><div class="tl-card">
+          <div class="tl-card-title">MBA – Master der Betriebswirtschaftslehre</div>
+          <div class="tl-card-org">Chandigarh University, Indien</div>
+          <div class="tl-card-desc">Betriebswirtschaftliches Fundament mit Fokus auf Strategie, Marketing und Management. Internationales Umfeld mit Studierenden aus über 40 Ländern.</div>
+          <span class="tl-pill">🇮🇳 Indien</span>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="projekte">
+  <div class="container">
+    <div class="sec-eyebrow reveal">Projekte</div>
+    <h2 class="sec-title reveal">Websites, die <em>ranken</em><br>und konvertieren</h2>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="proj-num">01 — Freelance 2025</div>
+        <div class="proj-icon">🌐</div>
+        <div class="proj-name">globalux.de</div>
+        <div class="proj-desc">Responsive Website mit Google- und Meta-Kampagnen. SEO-Strategie mit messbarer Steigerung der Sichtbarkeit und Rankings auf Seite 1.</div>
+        <div class="tag-row"><span class="ptag ptag-gold">SEO</span><span class="ptag ptag-gold">Google Ads</span><span class="ptag ptag-sky">Meta</span><span class="ptag ptag-sage">Webdesign</span></div>
+      </div>
+      <div class="proj-card reveal d1">
+        <div class="proj-num">02 — Freelance 2025</div>
+        <div class="proj-icon">🧹</div>
+        <div class="proj-name">tidyhomeservice.de</div>
+        <div class="proj-desc">Vollständiger Webauftritt für einen Reinigungsservice. Responsives Layout, technische SEO-Optimierung und kontinuierliches Performance-Monitoring.</div>
+        <div class="tag-row"><span class="ptag ptag-gold">On-Page SEO</span><span class="ptag ptag-sage">WordPress</span><span class="ptag ptag-sky">Analytics</span></div>
+      </div>
+      <div class="proj-card reveal d2">
+        <div class="proj-num">03 — Eigenprojekt · laufend</div>
+        <div class="proj-icon">🚀</div>
+        <div class="proj-name">Market Trend</div>
+        <div class="proj-desc">KI-gestütztes Tool für digitale Marketer: analysiert Echtzeit-Trends und generiert sofort nutzbare Content-Ideen für Social Media und Kampagnen.</div>
+        <div class="tag-row"><span class="ptag ptag-coral">KI / AI</span><span class="ptag ptag-sage">Social Media</span><span class="ptag ptag-sky">SaaS</span><span class="ptag ptag-gold">Content</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="skills">
+  <div class="container">
+    <div class="sec-eyebrow reveal">Expertise</div>
+    <h2 class="sec-title reveal">Werkzeuge, die<br><em>Ergebnisse</em> liefern</h2>
+    <div class="skills-grid">
+      <div class="reveal">
+        <div class="skill-group">
+          <div class="skill-group-label">Marketing & SEO</div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">SEO (On-Page & Technisch)</span><span class="skill-pct">92%</span></div><div class="skill-track"><div class="skill-fill" style="--w:92%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">Google Ads / SEM</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" style="--w:88%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">Meta Business Manager</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" style="--w:85%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">Social Media Marketing</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" style="--w:90%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">Content-Strategie</span><span class="skill-pct">87%</span></div><div class="skill-track"><div class="skill-fill" style="--w:87%"></div></div></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Analytics & Tools</div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">Looker Studio / DV360</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" style="--w:80%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">Google Tag Manager</span><span class="skill-pct">82%</span></div><div class="skill-track"><div class="skill-fill" style="--w:82%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">TikTok & Amazon Ads</span><span class="skill-pct">75%</span></div><div class="skill-track"><div class="skill-fill" style="--w:75%"></div></div></div>
+        </div>
+      </div>
+      <div class="reveal d2">
+        <div class="skill-group">
+          <div class="skill-group-label">Design & Web</div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">WordPress / Wix</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" style="--w:88%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">Canva / Adobe Photoshop</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" style="--w:85%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">Adobe Express</span><span class="skill-pct">80%</span></div><div class="skill-track"><div class="skill-fill" style="--w:80%"></div></div></div>
+          <div class="skill-item"><div class="skill-row"><span class="skill-name">KI-Tools</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" style="--w:90%"></div></div></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-label">Sprachen</div>
+          <div class="lang-grid">
+            <div class="lang-card"><div class="lang-flag">🇦🇫</div><div class="lang-name">Farsi</div><div class="lang-lvl">Muttersprache</div><div class="lang-dots"><div class="ldot on"></div><div class="ldot on"></div><div class="ldot on"></div><div class="ldot on"></div><div class="ldot on"></div></div></div>
+            <div class="lang-card"><div class="lang-flag">🇬🇧</div><div class="lang-name">Englisch</div><div class="lang-lvl">Fließend (C1)</div><div class="lang-dots"><div class="ldot on"></div><div class="ldot on"></div><div class="ldot on"></div><div class="ldot on"></div><div class="ldot"></div></div></div>
+            <div class="lang-card"><div class="lang-flag">🇩🇪</div><div class="lang-name">Deutsch</div><div class="lang-lvl">B1 / B2</div><div class="lang-dots"><div class="ldot on"></div><div class="ldot on"></div><div class="ldot on"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+            <div class="lang-card"><div class="lang-flag">🇮🇳</div><div class="lang-name">Hindi</div><div class="lang-lvl">Grundkenntnisse</div><div class="lang-dots"><div class="ldot on"></div><div class="ldot on"></div><div class="ldot"></div><div class="ldot"></div><div class="ldot"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="kontakt">
+  <div class="container">
+    <div class="sec-eyebrow reveal">Kontakt</div>
+    <h2 class="sec-title reveal">Bereit für<br><em>Seite 1?</em></h2>
+    <div class="contact-layout">
+      <div class="reveal">
+        <p class="contact-lead">Ob neue Marketingstrategie, bessere SEO oder eine wirkungsvolle Kampagne — ich freue mich darauf, Ihre Ziele kennenzulernen und gemeinsam die richtigen Stellschrauben zu drehen.</p>
+        <div class="contact-detail"><div class="contact-icon-box">✉️</div><div class="contact-info">jawadkazimi87@gmail.com<small>E-Mail</small></div></div>
+        <div class="contact-detail"><div class="contact-icon-box">📱</div><div class="contact-info">+49 176 232 94 250<small>Telefon / WhatsApp</small></div></div>
+        <div class="contact-detail"><div class="contact-icon-box">📍</div><div class="contact-info">Berlin, Deutschland<small>Umzugsbereitschaft vorhanden</small></div></div>
+      </div>
+      <div class="reveal d2">
+        <div class="cform">
+          <div class="cform-row">
+            <div class="cfield"><label class="clabel">Ihr Name</label><input class="cinput" type="text" placeholder="Max Mustermann"></div>
+            <div class="cfield"><label class="clabel">Unternehmen</label><input class="cinput" type="text" placeholder="Musterfirma GmbH"></div>
+          </div>
+          <div class="cfield"><label class="clabel">E-Mail</label><input class="cinput" type="email" placeholder="max@musterfirma.de"></div>
+          <div class="cfield"><label class="clabel">Ihre Nachricht</label><textarea class="ctextarea" rows="4" placeholder="Womit kann ich Ihnen helfen?"></textarea></div>
+          <button class="cbtn">Nachricht senden →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-name">Jawad <span>Kazimi</span></div>
+  <div class="footer-links"><a href="#story">Story</a><a href="#journey">Werdegang</a><a href="#projekte">Projekte</a><a href="#skills">Expertise</a></div>
+  <div class="footer-copy">© 2025 · Berlin</div>
+</footer>
+<script>
+const cur=document.getElementById('cursor'),rng=document.getElementById('ring');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  setTimeout(()=>{rng.style.left=e.clientX+'px';rng.style.top=e.clientY+'px';},60);
+});
+document.querySelectorAll('a,button,.proj-card,.tl-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';rng.style.width='54px';rng.style.height='54px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';rng.style.width='32px';rng.style.height='32px';});
+});
+function count(el){
+  const t=+el.dataset.count,suf=el.classList.contains('stat-num')?'+':'';
+  let n=0;const step=Math.max(1,Math.ceil(t/30));
+  const iv=setInterval(()=>{n=Math.min(n+step,t);el.textContent=n+suf;if(n>=t)clearInterval(iv);},45);
+}
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.classList.add('visible');
+    e.target.querySelectorAll('[data-count]').forEach(count);
+    if(e.target.dataset.count)count(e.target);
+    e.target.querySelectorAll('.skill-fill').forEach(b=>b.classList.add('animated'));
+    io.unobserve(e.target);
+  });
+},{threshold:0.12});
+document.querySelectorAll('.reveal,.reveal-r,.num-box').forEach(el=>io.observe(el));
+setTimeout(()=>{document.querySelectorAll('.hero .stat-num').forEach(count);},500);
+const secs=document.querySelectorAll('section[id]'),links=document.querySelectorAll('.nav-links a');
+secs.forEach(s=>new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');if(a)a.classList.add('active');}});
+},{threshold:0.4}).observe(s));
+</script>
+</body>
+</html>
