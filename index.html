@@ -260,6 +260,9 @@
       </div>
     </section>
 
+    <!-- Lichtadern führen das Videoende in die Seite hinein weiter. -->
+    <div class="streams" data-streams aria-hidden="true"></div>
+
     <section class="bridge" id="ansatz" aria-labelledby="bridge-title">
       <div class="bridge__thread" aria-hidden="true"></div>
       <div class="shell">
@@ -354,10 +357,48 @@
               <p class="node__meta">GA4 · Tracking · Reporting</p>
             </div>
           </li>
+          <li class="node reveal">
+            <span class="node__index">09</span>
+            <div class="node__body">
+              <h3 class="node__title">E-Commerce</h3>
+              <p class="node__text">Onlineshops, die verkaufen statt nur zu zeigen: klare Produktseiten, kurzer Bestellweg, weniger Abbrüche im Warenkorb.</p>
+              <p class="node__meta">Shopaufbau · Warenkorb · Checkout</p>
+            </div>
+          </li>
+          <li class="node reveal">
+            <span class="node__index">10</span>
+            <div class="node__body">
+              <h3 class="node__title">JTL-Shop</h3>
+              <p class="node__text">Einrichtung, Anpassung und Anbindung von JTL-Shop an die JTL-Warenwirtschaft — Artikel, Bestände und Aufträge laufen ohne doppelte Pflege.</p>
+              <p class="node__meta">JTL-Shop · JTL-Wawi · Schnittstellen</p>
+            </div>
+          </li>
         </ol>
         <p class="about__more reveal" style="margin-top:2rem">
           <a class="textlink" href="leistungen.html">Alle Leistungen im Detail</a>
         </p>
+      </div>
+    </section>
+
+    <section class="band" id="netz" aria-labelledby="netz-title">
+      <div class="shell orb">
+        <div>
+          <p class="eyebrow reveal">Im Zentrum</p>
+          <h2 class="section-title reveal" id="netz-title">Ihre Website ist<br><em>der Knotenpunkt.</em></h2>
+          <p class="band__intro reveal">
+            Suchmaschinen, Karten, Kampagnen, Bewertungen und soziale Kanäle sind keine
+            getrennten Baustellen. Sie führen alle auf dieselbe Seite — und deren Qualität
+            entscheidet, ob aus einem Besuch eine Anfrage wird.
+          </p>
+          <ul class="orb__ring reveal">
+            <li>Alles zahlt auf einen Ort ein, statt sich zu verteilen</li>
+            <li>Jeder Kanal wird an derselben Kennzahl gemessen: Anfragen</li>
+            <li>Sie besitzen diesen Knotenpunkt — nicht eine Plattform</li>
+          </ul>
+        </div>
+        <div class="orb__stage reveal" data-globe>
+          <span class="orb__badge">🌐 Ihre Website</span>
+        </div>
       </div>
     </section>
 
@@ -413,49 +454,116 @@
       </div>
     </section>
 
+    <!-- ================= ZWEITE SCROLL-GESCHICHTE: SUCHE ================= -->
+    <!-- Zweites Video, gleiche Mechanik wie im Hero. Weil die Aufnahme hell
+         ist, steht die Schrift hier dunkel neben statt auf dem Bild. -->
+    <section class="story story--light" id="suche" data-story aria-labelledby="suche-headline">
+      <div class="story__stage" data-stage>
+
+        <div class="stage__media">
+          <video class="stage__video" data-video playsinline muted preload="metadata" tabindex="-1"
+            aria-hidden="true" poster="public/images/seo-poster.jpg"
+            data-src-desktop="public/videos/seo-story.mp4"
+            data-src-mobile="public/videos/seo-story-mobile.mp4"
+            data-src-webm="public/videos/seo-story.webm">
+          </video>
+        </div>
+
+        <div class="stage__beats">
+          <article class="beat is-active" data-start="0" data-end="0.3">
+            <p class="beat__eyebrow">Die Suche</p>
+            <h2 class="beat__display" id="suche-headline">Jede Anfrage<br><em>beginnt mit einer Suche.</em></h2>
+            <p class="beat__lead">
+              Bevor jemand anruft, tippt er. Was in diesem Moment auf dem Bildschirm steht,
+              entscheidet, wen er anruft.
+            </p>
+          </article>
+
+          <article class="beat" data-start="0.3" data-end="0.58">
+            <p class="beat__eyebrow">Was wir tun</p>
+            <h2 class="beat__display">Wir sorgen dafür,<br><em>dass Ihr Name dort steht.</em></h2>
+            <p class="beat__lead">
+              Technik, Inhalte und Signale von außen greifen ineinander, bis Ihr Betrieb bei den
+              Suchen auftaucht, die zu Aufträgen führen.
+            </p>
+          </article>
+
+          <article class="beat" data-start="0.58" data-end="0.82">
+            <p class="beat__eyebrow">Drei Ebenen</p>
+            <h2 class="beat__display">Innen, außen,<br><em>und über die Zeit.</em></h2>
+            <ul class="beat__list">
+              <li>Interne Optimierung — Struktur, Ladezeit, Inhalte</li>
+              <li>Externe Signale — Verzeichnisse, Bewertungen, Verweise</li>
+              <li>Content-Strategie — Themen, die dauerhaft Anfragen sammeln</li>
+            </ul>
+          </article>
+
+          <article class="beat beat--cta" data-start="0.82" data-end="1.001">
+            <p class="beat__eyebrow">Ergebnis</p>
+            <h2 class="beat__display">Sichtbar für die,<br><em>die ohnehin schon suchen.</em></h2>
+            <div class="beat__actions">
+              <a class="btn btn--primary" href="kontakt.html">Sichtbarkeit besprechen</a>
+              <a class="btn btn--ghost" href="leistungen.html">Mehr zu SEO</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="scrub" aria-hidden="true"><i data-scrub></i></div>
+      </div>
+    </section>
+
     <section class="work band" id="arbeiten" aria-labelledby="work-title">
       <div class="shell">
         <header class="work__head">
-          <p class="eyebrow reveal">Arbeiten</p>
-          <h2 class="section-title reveal" id="work-title">Gebaut,<br><em>gemessen, nachgeschärft.</em></h2>
+          <p class="eyebrow reveal">Einblick</p>
+          <h2 class="section-title reveal" id="work-title">Woran wir<br><em>täglich arbeiten.</em></h2>
         </header>
         <div class="work__grid">
           <article class="project reveal">
-            <a class="project__link" href="kontakt.html">
+            <a class="project__link" href="leistungen.html">
               <figure class="project__frame">
-                <img src="public/images/work/projekt-01.jpg" alt="Website-Projekt [Kundenname]"
+                <img src="public/images/services/webdesign.jpg" alt="Entwurf einer Website auf einem Tablet"
                   width="1600" height="1100" loading="lazy" decoding="async">
               </figure>
               <div class="project__meta">
-                <h3 class="project__title">[Kundenname]</h3>
-                <p class="project__kind">Website &amp; Local SEO</p>
-                <p class="project__result">[Ergebnis eintragen — z. B. Anfragen pro Monat]</p>
+                <h3 class="project__title">Webdesign &amp; UI</h3>
+                <p class="project__result">Gestaltung und Aufbau der Seite, bevor eine Zeile Code entsteht.</p>
               </div>
             </a>
           </article>
           <article class="project project--offset reveal">
-            <a class="project__link" href="kontakt.html">
+            <a class="project__link" href="leistungen.html">
               <figure class="project__frame">
-                <img src="public/images/work/projekt-02.jpg" alt="Website-Projekt [Kundenname]"
+                <img src="public/images/services/entwicklung.jpg" alt="Arbeitsplatz mit Code-Editor und Auszeichnungssprachen"
                   width="1600" height="1100" loading="lazy" decoding="async">
               </figure>
               <div class="project__meta">
-                <h3 class="project__title">[Kundenname]</h3>
-                <p class="project__kind">Relaunch &amp; Performance</p>
-                <p class="project__result">[Ergebnis eintragen — z. B. Ladezeit vorher/nachher]</p>
+                <h3 class="project__title">Entwicklung</h3>
+                <p class="project__result">Sauberes Frontend, schnelle Ladezeiten, wartbarer Code.</p>
               </div>
             </a>
           </article>
           <article class="project reveal">
-            <a class="project__link" href="kontakt.html">
+            <a class="project__link" href="leistungen.html">
               <figure class="project__frame">
-                <img src="public/images/work/projekt-03.jpg" alt="Website-Projekt [Kundenname]"
+                <img src="public/images/services/shop.jpg" alt="Onlineshop auf einem Notebook"
                   width="1600" height="1100" loading="lazy" decoding="async">
               </figure>
               <div class="project__meta">
-                <h3 class="project__title">[Kundenname]</h3>
-                <p class="project__kind">Kampagnen &amp; Analytics</p>
-                <p class="project__result">[Ergebnis eintragen — z. B. Kosten pro Anfrage]</p>
+                <h3 class="project__title">E-Commerce &amp; JTL</h3>
+                <p class="project__result">Shopsysteme, die verkaufen und an die Warenwirtschaft angebunden sind.</p>
+              </div>
+            </a>
+          </article>
+          <article class="project project--offset reveal">
+            <a class="project__link" href="leistungen.html">
+              <figure class="project__frame">
+                <img src="public/images/services/sichtbarkeit.jpg" alt="Auswertung von Websitezahlen auf zwei Bildschirmen"
+                  width="1600" height="1100" loading="lazy" decoding="async">
+              </figure>
+              <div class="project__meta">
+                <h3 class="project__title">SEO &amp; Kampagnen</h3>
+                <p class="project__result">Sichtbarkeit dort, wo Ihre Kunden bereits suchen.</p>
               </div>
             </a>
           </article>

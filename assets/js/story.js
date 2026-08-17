@@ -23,12 +23,11 @@
 
   /* ---------------------------------------------------------------- Story */
 
-  function initStory() {
-    var story = document.querySelector('[data-story]');
+  function initStory(story) {
     if (!story) return;
 
-    var stage = document.querySelector('[data-stage]');
-    var video = document.querySelector('[data-video]');
+    var stage = story.querySelector('[data-stage]');
+    var video = story.querySelector('[data-video]');
     var beats = Array.prototype.slice.call(story.querySelectorAll('.beat'));
     var steps = Array.prototype.slice.call(story.querySelectorAll('.rail__step'));
     var scrub = story.querySelector('[data-scrub]');
@@ -251,13 +250,29 @@
     var last = 0;
     var ticking = false;
 
+    /* Beim Herunterscrollen fährt die Kopfzeile weg, beim Hochscrollen
+       sofort wieder ein. Die Richtung wird über eine kleine Wegstrecke
+       gesammelt, damit ein Wackeln von wenigen Pixeln nichts auslöst. */
+    var weg = 0;
+
     var update = function () {
       ticking = false;
-      var y = window.scrollY;
-      head.classList.toggle('is-stuck', y > 40);
-      var open = nav && nav.classList.contains('is-open');
-      head.classList.toggle('is-hidden', !open && y > 640 && y > last + 4);
+      var y = Math.max(0, window.scrollY);
+      var d = y - last;
       last = y;
+
+      head.classList.toggle('is-stuck', y > 40);
+
+      var open = nav && nav.classList.contains('is-open');
+      if (open || y < 240) {
+        weg = 0;
+        head.classList.remove('is-hidden');
+        return;
+      }
+
+      weg = (d > 0) === (weg > 0) ? weg + d : d;
+      if (weg > 70) head.classList.add('is-hidden');
+      else if (weg < -50) head.classList.remove('is-hidden');
     };
 
     window.addEventListener('scroll', function () {
@@ -628,17 +643,327 @@
       + 'Ich würde das Ergebnis gern besprechen.\n\n';
   }
 
+
+  /* ------------------------------------------------- Lichtadern-Übergang */
+  /* Verbindet das Ende der Hero-Sequenz mit dem folgenden Abschnitt: Die
+     Leuchtspuren aus dem letzten Videobild laufen weiter in die Seite
+     hinein, statt dass hart geschnitten wird. Reines Canvas, keine
+     Bibliothek, und der Zeichenlauf steht still, sobald der Bereich aus
+     dem Blickfeld ist. */
+
+  function initStreams() {
+    var host = document.querySelector('[data-streams]');
+    if (!host || reduced) return;
+
+    var canvas = document.createElement('canvas');
+    canvas.setAttribute('aria-hidden', 'true');
+    host.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+
+    var breite = 0, hoehe = 0, dpr = 1, laufend = false, sichtbar = false;
+    var adern = [];
+
+    function bauen() {
+      var r = host.getBoundingClientRect();
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      breite = Math.max(1, r.width);
+      hoehe = Math.max(1, r.height);
+      canvas.width = breite * dpr;
+      canvas.height = hoehe * dpr;
+      canvas.style.width = breite + 'px';
+      canvas.style.height = hoehe + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      /* Die Adern starten oben verteilt und laufen nach unten zusammen —
+         wie die Datenströme, die am Ende des Videos zum Betrieb führen. */
+      var anzahl = breite < 700 ? 7 : 13;
+      adern = [];
+      for (var i = 0; i < anzahl; i++) {
+        var t = (i + .5) / anzahl;
+        adern.push({
+          x0: t * breite,
+          x1: breite * (.5 + (t - .5) * .28),
+          krumm: (Math.random() - .5) * breite * .18,
+          tempo: .12 + Math.random() * .2,
+          phase: Math.random(),
+          dicke: .8 + Math.random() * 1.2,
+          warm: i % 3 === 0
+        });
+      }
+    }
+
+    function zeichnen(zeit) {
+      laufend = false;
+      ctx.clearRect(0, 0, breite, hoehe);
+
+      for (var i = 0; i < adern.length; i++) {
+        var a = adern[i];
+        ctx.beginPath();
+        ctx.moveTo(a.x0, 0);
+        ctx.bezierCurveTo(a.x0 + a.krumm, hoehe * .38,
+                          a.x1 - a.krumm, hoehe * .66,
+                          a.x1, hoehe);
+        ctx.lineWidth = a.dicke;
+        ctx.strokeStyle = a.warm ? 'rgba(122, 90, 240, .20)' : 'rgba(47, 174, 132, .18)';
+        ctx.stroke();
+
+        /* Lichtpunkt, der die Ader entlangwandert */
+        var f = ((zeit / 1000) * a.tempo + a.phase) % 1;
+        var mf = 1 - f;
+        var px = mf * mf * mf * a.x0
+               + 3 * mf * mf * f * (a.x0 + a.krumm)
+               + 3 * mf * f * f * (a.x1 - a.krumm)
+               + f * f * f * a.x1;
+        var py = 3 * mf * mf * f * hoehe * .38
+               + 3 * mf * f * f * hoehe * .66
+               + f * f * f * hoehe;
+
+        var glanz = Math.sin(f * Math.PI);
+        var g = ctx.createRadialGradient(px, py, 0, px, py, 26);
+        var farbe = a.warm ? '122, 90, 240' : '47, 174, 132';
+        g.addColorStop(0, 'rgba(' + farbe + ',' + (.5 * glanz) + ')');
+        g.addColorStop(1, 'rgba(' + farbe + ', 0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(px, py, 26, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(255, 255, 255,' + (.85 * glanz) + ')';
+        ctx.beginPath();
+        ctx.arc(px, py, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (sichtbar) anstossen();
+    }
+
+    function anstossen() {
+      if (laufend) return;
+      laufend = true;
+      window.requestAnimationFrame(zeichnen);
+    }
+
+    bauen();
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (eintraege) {
+        sichtbar = eintraege[0].isIntersecting;
+        if (sichtbar) anstossen();
+      }, { rootMargin: '120px' }).observe(host);
+    } else {
+      sichtbar = true;
+      anstossen();
+    }
+
+    var timer;
+    window.addEventListener('resize', function () {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () { bauen(); anstossen(); }, 160);
+    });
+  }
+
+  /* ------------------------------------------------------------- Globus */
+  /* Drahtgitter-Erdkugel als Sinnbild für Online-Sichtbarkeit. Gezeichnet
+     mit einfacher Kugelprojektion auf 2D-Canvas — kein WebGL, keine
+     Bibliothek, wenige Kilobyte. */
+
+  function initGlobe() {
+    var host = document.querySelector('[data-globe]');
+    if (!host) return;
+
+    var canvas = document.createElement('canvas');
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label',
+      'Rotierender Drahtgitter-Globus mit leuchtenden Verbindungspunkten');
+    host.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+
+    var groesse = 0, dpr = 1, drehung = 0, laufend = false, sichtbar = false;
+    var letzte = 0;
+
+    /* Gitternetz: Längen- und Breitenkreise als Punktfolgen. Erst die
+       durchgehenden Linien lassen die Fläche als Kugel lesen — eine reine
+       Punktwolke wirkt flach. */
+    var netz = [];
+    var SEG = 64;
+
+    for (var lo = 0; lo < 12; lo++) {                 /* Längenkreise */
+      var phi = (lo / 12) * Math.PI * 2;
+      var linie = [];
+      for (var i = 0; i <= SEG; i++) {
+        var th = (i / SEG) * Math.PI - Math.PI / 2;
+        linie.push({ x: Math.cos(th) * Math.cos(phi),
+                     y: Math.sin(th),
+                     z: Math.cos(th) * Math.sin(phi) });
+      }
+      netz.push(linie);
+    }
+
+    for (var la = 1; la < 7; la++) {                  /* Breitenkreise */
+      var th2 = (la / 7) * Math.PI - Math.PI / 2;
+      var r2 = Math.cos(th2), y2 = Math.sin(th2);
+      var kreis = [];
+      for (var j = 0; j <= SEG; j++) {
+        var ph2 = (j / SEG) * Math.PI * 2;
+        kreis.push({ x: Math.cos(ph2) * r2, y: y2, z: Math.sin(ph2) * r2 });
+      }
+      netz.push(kreis);
+    }
+
+    /* Leuchtende Knoten — Sinnbild für die Kanäle, die auf die Seite zeigen */
+    var knoten = [];
+    for (var k = 0; k < 22; k++) {
+      var yk = 1 - (k / 21) * 2;
+      var rk = Math.sqrt(Math.max(0, 1 - yk * yk));
+      var tk = k * Math.PI * (3 - Math.sqrt(5));
+      knoten.push({ x: Math.cos(tk) * rk, y: yk, z: Math.sin(tk) * rk,
+                    puls: Math.random() });
+    }
+
+    function bauen() {
+      var r = host.getBoundingClientRect();
+      groesse = Math.max(1, Math.min(r.width, r.height));
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      canvas.width = groesse * dpr;
+      canvas.height = groesse * dpr;
+      canvas.style.width = groesse + 'px';
+      canvas.style.height = groesse + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function zeichnen(zeit) {
+      laufend = false;
+      var dt = letzte ? Math.min(64, zeit - letzte) : 16;
+      letzte = zeit;
+      drehung += dt * 0.00019;
+
+      var m = groesse / 2;
+      var rad = groesse * 0.38;
+      ctx.clearRect(0, 0, groesse, groesse);
+
+      var sin = Math.sin(drehung), cos = Math.cos(drehung);
+      var neig = -0.42, sinN = Math.sin(neig), cosN = Math.cos(neig);
+
+      function projizieren(p) {
+        var x = p.x * cos - p.z * sin;
+        var z = p.x * sin + p.z * cos;
+        var y = p.y * cosN - z * sinN;
+        z = p.y * sinN + z * cosN;
+        return { sx: m + x * rad, sy: m + y * rad, t: (z + 1) / 2 };
+      }
+
+      /* Lichthof und Kugelkörper */
+      var hof = ctx.createRadialGradient(m - rad * .3, m - rad * .35, rad * .1, m, m, rad * 1.35);
+      hof.addColorStop(0, 'rgba(255, 255, 255, .95)');
+      hof.addColorStop(.55, 'rgba(233, 225, 251, .55)');
+      hof.addColorStop(1, 'rgba(122, 90, 240, 0)');
+      ctx.fillStyle = hof;
+      ctx.beginPath();
+      ctx.arc(m, m, rad * 1.02, 0, Math.PI * 2);
+      ctx.fill();
+
+      /* Gitternetz — hintere Hälfte blasser als die vordere */
+      for (var n = 0; n < netz.length; n++) {
+        var linie = netz[n];
+        var vorher = null;
+        for (var i = 0; i < linie.length; i++) {
+          var q = projizieren(linie[i]);
+          if (vorher) {
+            var tm = (q.t + vorher.t) / 2;
+            ctx.strokeStyle = 'rgba(122, 90, 240,' + (.05 + tm * .30) + ')';
+            ctx.lineWidth = .5 + tm * .9;
+            ctx.beginPath();
+            ctx.moveTo(vorher.sx, vorher.sy);
+            ctx.lineTo(q.sx, q.sy);
+            ctx.stroke();
+          }
+          vorher = q;
+        }
+      }
+
+      /* Umriss */
+      ctx.strokeStyle = 'rgba(122, 90, 240, .3)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(m, m, rad, 0, Math.PI * 2);
+      ctx.stroke();
+
+      /* Knoten mit sanftem Pulsieren */
+      for (var kk = 0; kk < knoten.length; kk++) {
+        var kn = knoten[kk];
+        var pk = projizieren(kn);
+        if (pk.t < .45) continue;                 /* Rückseite auslassen */
+        var puls = .55 + .45 * Math.sin(zeit / 900 + kn.puls * 6.28);
+        var gr = (1.6 + pk.t * 2.4) * (.85 + puls * .3);
+        var warm = kk % 3 === 0;
+        var farbe = warm ? '47, 174, 132' : '122, 90, 240';
+
+        var g = ctx.createRadialGradient(pk.sx, pk.sy, 0, pk.sx, pk.sy, gr * 5);
+        g.addColorStop(0, 'rgba(' + farbe + ',' + (.4 * puls * pk.t) + ')');
+        g.addColorStop(1, 'rgba(' + farbe + ', 0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(pk.sx, pk.sy, gr * 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(' + farbe + ',' + (.35 + pk.t * .6) + ')';
+        ctx.beginPath();
+        ctx.arc(pk.sx, pk.sy, gr, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (sichtbar) anstossen();
+    }
+
+    function anstossen() {
+      if (laufend) return;
+      laufend = true;
+      window.requestAnimationFrame(zeichnen);
+    }
+
+    bauen();
+
+    if (reduced) {                 /* eine statische Ansicht genügt */
+      zeichnen(0);
+      return;
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) {
+        sichtbar = e[0].isIntersecting;
+        if (sichtbar) anstossen();
+      }, { rootMargin: '80px' }).observe(host);
+    } else {
+      sichtbar = true;
+      anstossen();
+    }
+
+    var timer;
+    window.addEventListener('resize', function () {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () { bauen(); anstossen(); }, 160);
+    });
+  }
+
+  function initStories() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-story]'), initStory);
+  }
+
   function boot() {
-    initStory();
+    initStories();
     initNav();
     initReveal();
     initImageFallbacks();
     initForm();
     initCheck();
+    initStreams();
+    initGlobe();
     initCurrentPage();
     initScorePrefill();
     initMisc();
   }
+
+  /* Für die Vorschaufassung, die alle Seiten in einem Dokument hält. */
+  window.__siteBoot = boot;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
