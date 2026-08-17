@@ -1,3 +1,22 @@
+# Assets und Marke
+
+## Arbeitsname ändern
+
+Die Agentur heißt derzeit **„Digital Marketing"** — ein Platzhalter, bis Sie sich
+entschieden haben. Der Name steht in jeder HTML-Datei an drei Stellen: in der Wortmarke
+(`wordmark__text`), im Seitentitel und in der Fußzeile. Ein Suchen-und-Ersetzen über alle
+`.html`-Dateien genügt:
+
+```bash
+grep -rl "Digital<span" *.html   # Wortmarke
+grep -rl "Digital Marketing" *.html
+```
+
+Die Wortmarke ist zweiteilig aufgebaut — fetter erster Teil, feiner zweiter Teil:
+`<span class="wordmark__text">Digital<span class="wordmark__thin">Marketing</span></span>`
+
+---
+
 # Assets — was Sie hier ablegen müssen
 
 Die Website erwartet die folgenden Dateien. **Alle Pfade sind bereits im Code verdrahtet** —

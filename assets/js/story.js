@@ -406,12 +406,237 @@
     if (year) year.textContent = String(new Date().getFullYear());
   }
 
+
+  /* ------------------------------------------------- Sichtbarkeits-Check */
+  /* Fünf Fragen, sofortige Auswertung im Browser. Es werden keine Daten
+     übertragen — das Ergebnis entsteht ausschließlich lokal. */
+
+  var CHECK = [
+    {
+      q: 'Wie alt ist Ihre aktuelle Website?',
+      a: [
+        ['Wir haben keine Website', 0],
+        ['Älter als vier Jahre', 1],
+        ['Ein bis drei Jahre', 3],
+        ['Dieses Jahr neu gebaut', 4]
+      ],
+      luecke: 'Eine veraltete oder fehlende Website kostet Anfragen, bevor das Gespräch beginnt.'
+    },
+    {
+      q: 'Wie viele Anfragen kommen pro Monat über die Website?',
+      a: [
+        ['Keine', 0],
+        ['Ein bis fünf', 2],
+        ['Sechs bis zwanzig', 3],
+        ['Mehr als zwanzig', 4]
+      ],
+      luecke: 'Besucher werden nicht zu Anfragen — meist liegt es an Aufbau und Kontaktweg.'
+    },
+    {
+      q: 'Erscheinen Sie bei Google, wenn jemand Ihre Leistung in Ihrer Region sucht?',
+      a: [
+        ['Nein oder unbekannt', 0],
+        ['Erst ab Seite zwei', 1],
+        ['Unter den ersten fünf', 3],
+        ['Auf den Plätzen eins bis drei', 4]
+      ],
+      luecke: 'Ohne Platzierung auf Seite eins findet die Suche ohne Sie statt.'
+    },
+    {
+      q: 'Läuft aktuell bezahlte Werbung für Ihren Betrieb?',
+      a: [
+        ['Nein', 1],
+        ['Ja, aber ohne Auswertung', 2],
+        ['Ja, mit monatlicher Auswertung', 4]
+      ],
+      luecke: 'Werbung ohne Auswertung verbrennt Budget an den falschen Stellen.'
+    },
+    {
+      q: 'Wissen Sie, welche Seite die meisten Anfragen erzeugt?',
+      a: [
+        ['Nein', 0],
+        ['Ungefähr', 2],
+        ['Ja, mit Zahlen belegt', 4]
+      ],
+      luecke: 'Ohne Messung bleibt jede Verbesserung Vermutung.'
+    }
+  ];
+
+  var STUFEN = [
+    { bis: 34, titel: 'Digital kaum sichtbar.', rat: 'Der Betrieb existiert online praktisch nicht. Der größte Hebel liegt nicht in Werbung, sondern in einer Website, die gefunden wird und Anfragen aufnimmt.' },
+    { bis: 59, titel: 'Basis vorhanden, Sichtbarkeit fehlt.', rat: 'Die Website ist da, aber sie arbeitet nicht. Mit gezieltem SEO und einem klaren Weg zur Anfrage lässt sich hier am schnellsten etwas bewegen.' },
+    { bis: 79, titel: 'Solide Grundlage mit klaren Lücken.', rat: 'Vieles läuft bereits. Jetzt entscheidet die Feinarbeit: Messung, Inhalte und Kampagnen, die auf die stärksten Seiten einzahlen.' },
+    { bis: 100, titel: 'Gut aufgestellt.', rat: 'Sie machen das Wesentliche richtig. Der nächste Schritt ist Skalierung: mehr Reichweite auf dem, was nachweislich funktioniert.' }
+  ];
+
+  function initCheck() {
+    var root = document.querySelector('[data-check]');
+    if (!root) return;
+
+    var bar = root.querySelector('[data-check-bar]');
+    var stage = root.querySelector('[data-check-stage]');
+    var index = 0;
+    var punkte = [];
+
+    var max = CHECK.reduce(function (n, f) {
+      return n + Math.max.apply(null, f.a.map(function (o) { return o[1]; }));
+    }, 0);
+
+    function fortschritt(n) {
+      if (bar) bar.style.width = Math.round(n / CHECK.length * 100) + '%';
+    }
+
+    function frage() {
+      var f = CHECK[index];
+      var wrap = document.createElement('div');
+      wrap.className = 'check__step is-shown';
+
+      var zaehler = document.createElement('p');
+      zaehler.className = 'check__count';
+      zaehler.textContent = 'Frage ' + (index + 1) + ' von ' + CHECK.length;
+      wrap.appendChild(zaehler);
+
+      var titel = document.createElement('p');
+      titel.className = 'check__q';
+      titel.textContent = f.q;
+      wrap.appendChild(titel);
+
+      var liste = document.createElement('div');
+      liste.className = 'check__options';
+      f.a.forEach(function (opt) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'check__opt';
+        b.textContent = opt[0];
+        b.addEventListener('click', function () {
+          punkte[index] = opt[1];
+          index++;
+          fortschritt(index);
+          index < CHECK.length ? frage() : ergebnis();
+        });
+        liste.appendChild(b);
+      });
+      wrap.appendChild(liste);
+
+      if (index > 0) {
+        var zurueck = document.createElement('button');
+        zurueck.type = 'button';
+        zurueck.className = 'check__back';
+        zurueck.textContent = '← Eine Frage zurück';
+        zurueck.addEventListener('click', function () {
+          index--;
+          fortschritt(index);
+          frage();
+        });
+        wrap.appendChild(zurueck);
+      }
+
+      stage.replaceChildren(wrap);
+      var erste = wrap.querySelector('.check__opt');
+      if (erste && index > 0) erste.focus();
+    }
+
+    function ergebnis() {
+      var summe = punkte.reduce(function (a, b) { return a + b; }, 0);
+      var wert = Math.round(summe / max * 100);
+      var stufe = STUFEN.find(function (s) { return wert <= s.bis; }) || STUFEN[3];
+
+      var wrap = document.createElement('div');
+      wrap.className = 'check__step is-shown';
+      wrap.setAttribute('role', 'status');
+
+      var kopf = document.createElement('p');
+      kopf.className = 'check__score';
+      var zahl = document.createElement('b');
+      zahl.textContent = String(wert);
+      var von = document.createElement('span');
+      von.textContent = 'von 100 Sichtbarkeitspunkten';
+      kopf.append(zahl, von);
+      wrap.appendChild(kopf);
+
+      var titel = document.createElement('p');
+      titel.className = 'check__verdict';
+      titel.textContent = stufe.titel;
+      wrap.appendChild(titel);
+
+      var rat = document.createElement('p');
+      rat.className = 'check__advice';
+      rat.textContent = stufe.rat;
+      wrap.appendChild(rat);
+
+      var luecken = CHECK.filter(function (f, i) { return punkte[i] <= 2; });
+      if (luecken.length) {
+        var ul = document.createElement('ul');
+        ul.className = 'check__gaps';
+        luecken.slice(0, 4).forEach(function (f) {
+          var li = document.createElement('li');
+          li.textContent = f.luecke;
+          ul.appendChild(li);
+        });
+        wrap.appendChild(ul);
+      }
+
+      var aktionen = document.createElement('div');
+      aktionen.className = 'check__actions';
+
+      var a1 = document.createElement('a');
+      a1.className = 'btn btn--primary';
+      a1.href = 'kontakt.html?score=' + wert;
+      a1.textContent = 'Ergebnis besprechen';
+
+      var a2 = document.createElement('button');
+      a2.type = 'button';
+      a2.className = 'btn btn--ghost';
+      a2.textContent = 'Neu starten';
+      a2.addEventListener('click', function () {
+        index = 0;
+        punkte = [];
+        fortschritt(0);
+        frage();
+      });
+
+      aktionen.append(a1, a2);
+      wrap.appendChild(aktionen);
+      stage.replaceChildren(wrap);
+      fortschritt(CHECK.length);
+    }
+
+    fortschritt(0);
+    frage();
+  }
+
+  /* ------------------------------------------- Aktuelle Seite markieren */
+
+  function initCurrentPage() {
+    var hier = location.pathname.split('/').pop() || 'index.html';
+    Array.prototype.forEach.call(document.querySelectorAll('.mainnav__list a'), function (a) {
+      var ziel = a.getAttribute('href').split('#')[0].split('/').pop();
+      if (ziel && ziel === hier) {
+        a.classList.add('is-current');
+        a.setAttribute('aria-current', 'page');
+      }
+    });
+  }
+
+  /* --------------------------------- Ergebnis in das Kontaktformular tragen */
+
+  function initScorePrefill() {
+    var wert = new URLSearchParams(location.search).get('score');
+    var feld = document.getElementById('f-text');
+    if (!wert || !feld || feld.value) return;
+    feld.value = 'Mein Sichtbarkeits-Check ergab ' + wert + ' von 100 Punkten. '
+      + 'Ich würde das Ergebnis gern besprechen.\n\n';
+  }
+
   function boot() {
     initStory();
     initNav();
     initReveal();
     initImageFallbacks();
     initForm();
+    initCheck();
+    initCurrentPage();
+    initScorePrefill();
     initMisc();
   }
 
