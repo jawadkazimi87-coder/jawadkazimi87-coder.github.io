@@ -2754,3 +2754,55 @@ body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
     --step-title: clamp(1.4rem, 7vw, 1.9rem);
   }
 }
+
+/* ======================= Check mit Globus daneben ========================= */
+/* Die Fragekarte ließ die rechte Bildhälfte leer. Der Globus füllt sie und
+   zeigt zugleich, worum es geht: alle Kanäle führen auf eine Seite. */
+
+.check-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 1000px) {
+  .check-split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  }
+}
+
+.check-split__main {
+  min-width: 0;
+}
+
+.check-split__orb {
+  display: grid;
+  justify-items: center;
+  gap: 1.2rem;
+  min-width: 0;
+}
+
+.check-split__note {
+  margin: 0;
+  max-width: 34ch;
+  text-align: center;
+  font-size: .92rem;
+  color: var(--ink-2);
+}
+
+/* Auf kleinen Geräten steht die Kugel über den Fragen: Sie erklärt das
+   Thema, bevor gefragt wird, und kostet dort keine Höhe im Lesefluss. */
+@media (max-width: 999px) {
+  .check-split__orb {
+    order: -1;
+  }
+
+  .check-split .orb__stage {
+    width: min(100%, 20rem);
+  }
+
+  .check-split__note {
+    font-size: .88rem;
+  }
+}
