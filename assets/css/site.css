@@ -1525,8 +1525,8 @@ section[id] {
   .rail {
     top: auto;
     bottom: 3.2rem;
-    left: var(--stage-x);
-    right: var(--stage-x);
+    left: var(--gutter);
+    right: var(--gutter);
     transform: none;
     display: flex;
     justify-content: space-between;
@@ -1576,11 +1576,12 @@ section[id] {
   .stage__media {
     top: 8.5svh;
     bottom: auto;
-    left: var(--stage-x);
-    right: var(--stage-x);
-    height: calc((100vw - 2 * var(--gutter)) * 0.5625);
+    left: 0;
+    right: 0;
+    height: calc(100vw * 0.5625);
     background-size: cover;
-    box-shadow: var(--shadow);
+    border-radius: 0;
+    box-shadow: none;
   }
 
   /* Unter dem Band steht der Text auf hellem Grund — hier gelten die
@@ -1644,10 +1645,13 @@ section[id] {
      Bauchbinde im Film. Dadurch kann kein Beat ins Bild hineinwachsen,
      auch der lange Schlussblock mit den beiden Schaltflächen nicht. */
   .stage__beats {
-    align-items: start;
-    padding-top: calc(8.5svh + (100vw - 2 * var(--gutter)) * 0.5625 + 1.5rem);
-    padding-bottom: clamp(5rem, 13vh, 7rem);
-    padding-inline: 0;
+    /* Der Text sitzt mittig zwischen Videoband und Kapitelanzeige, statt
+       direkt unter dem Band zu kleben und darunter eine große Lücke zu
+       lassen. */
+    align-items: center;
+    padding-top: calc(8.5svh + 100vw * 0.5625 + 1.2rem);
+    padding-bottom: clamp(5.5rem, 14vh, 7.5rem);
+    padding-inline: var(--gutter);
   }
 
   .beat--cta .beat__display {
@@ -1688,7 +1692,7 @@ section[id] {
   }
 
   .stage__beats {
-    padding-top: calc(4.5svh + (100vw - 2 * var(--gutter)) * 0.5625 + 1rem);
+    padding-top: calc(4.5svh + 100vw * 0.5625 + .9rem);
     padding-bottom: clamp(4.5rem, 11vh, 6rem);
   }
 
@@ -2139,6 +2143,9 @@ body.subpage .masthead {
 
 .steps {
   counter-reset: step;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
   gap: 1px;
   background: var(--line);
@@ -2426,22 +2433,28 @@ body.subpage .masthead {
    noch nicht gescrollt wurde, und wechselt beim Anheften auf dunkle Schrift.
    ========================================================================== */
 
-body:not(.subpage) .masthead:not(.is-stuck) .wordmark,
-body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a,
-body:not(.subpage) .masthead:not(.is-stuck) .menutoggle {
-  color: #FFFFFF;
+@media (min-width: 861px), (orientation: landscape) {
+
+  body:not(.subpage) .masthead:not(.is-stuck) .wordmark,
+  body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a,
+  body:not(.subpage) .masthead:not(.is-stuck) .menutoggle {
+    color: #FFFFFF;
+  }
 }
 
-body:not(.subpage) .masthead:not(.is-stuck) .wordmark__thin {
-  color: rgba(255, 255, 255, .7);
-}
+@media (min-width: 861px), (orientation: landscape) {
 
-body:not(.subpage) .masthead:not(.is-stuck) .menutoggle__bars i {
-  background: #FFFFFF;
-}
+  body:not(.subpage) .masthead:not(.is-stuck) .wordmark__thin {
+    color: rgba(255, 255, 255, .7);
+  }
 
-body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
-  background: #FFFFFF;
+  body:not(.subpage) .masthead:not(.is-stuck) .menutoggle__bars i {
+    background: #FFFFFF;
+  }
+
+  body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
+    background: #FFFFFF;
+  }
 }
 
 /* ============================ Lichtadern-Übergang ========================= */
@@ -2501,6 +2514,10 @@ body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
 .orb__stage {
   position: relative;
   aspect-ratio: 1;
+  /* Die Leinwand bekommt ihre Pixelmaße von JavaScript. Ohne diese Grenze
+     kann ein einmal gemessener Wert die Spalte breiter machen als die
+     Seite. */
+  max-width: 100%;
   width: min(100%, 30rem);
   margin-inline: auto;
   display: grid;
@@ -2509,6 +2526,8 @@ body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
 
 .orb__stage canvas {
   display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 .orb__badge {
@@ -2719,8 +2738,11 @@ body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
   .story--light .stage__beats {
     inset: 0 var(--stage-x) var(--stage-bottom);
     width: auto;
-    align-items: end;
-    padding-top: calc(clamp(4.5rem, 10vh, 7rem) + min(40vh, 15rem) + 1.5rem);
+    /* Wie im Hero: mittig im freien Raum unter dem Bild, statt unten zu
+       kleben und eine große Lücke zu lassen. */
+    align-items: center;
+    padding-top: calc(clamp(4.5rem, 10vh, 7rem) + min(40vh, 15rem) + 1.4rem);
+    padding-bottom: clamp(3rem, 8vh, 4.5rem);
   }
 
   .story--light .beat__display {
@@ -2788,9 +2810,14 @@ body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
 
 .check-split__orb {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: center;
   gap: 1.2rem;
   min-width: 0;
+}
+
+.check-split__orb > * {
+  max-width: 100%;
 }
 
 .check-split__note {
@@ -2814,5 +2841,19 @@ body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
 
   .check-split__note {
     font-size: .88rem;
+  }
+}
+
+/* Im Hochformat standen Ziffer und Kettenpunkt übereinander, weil die
+   Indexspalte dort schmaler ist als der Abstand des Punktes. Der Punkt
+   rückt an den Rand, die Ziffer dahinter. */
+@media (max-width: 700px) {
+  .node::before,
+  .node__index::before {
+    left: .5rem;
+  }
+
+  .node__index {
+    padding-left: 1.35rem;
   }
 }
