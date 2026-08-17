@@ -2450,10 +2450,20 @@ body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
 
 .streams {
   position: relative;
-  height: clamp(9rem, 22vh, 16rem);
+  z-index: 0;
+  height: clamp(16rem, 42vh, 30rem);
   margin-top: -1px;
+  /* Der untere Teil schiebt sich hinter den folgenden Abschnitt, damit die
+     Adern nicht abbrechen, sondern hinter der Überschrift auslaufen. */
+  margin-bottom: clamp(-14rem, -26vh, -7rem);
   overflow: hidden;
   pointer-events: none;
+}
+
+/* Der nachfolgende Abschnitt liegt darüber, sonst verschwände sein Text. */
+.bridge {
+  position: relative;
+  z-index: 1;
 }
 
 .streams canvas {
@@ -2467,7 +2477,7 @@ body:not(.subpage) .masthead:not(.is-stuck) .mainnav__list a::after {
   content: "";
   position: absolute;
   inset: 0 0 auto;
-  height: 62%;
+  height: clamp(4rem, 9vh, 7rem);
   background: linear-gradient(180deg, rgba(12, 10, 20, .92) 0%, rgba(12, 10, 20, .45) 42%, rgba(12, 10, 20, 0) 100%);
 }
 

@@ -684,7 +684,7 @@
           x0: t * breite,
           x1: breite * (.5 + (t - .5) * .28),
           krumm: (Math.random() - .5) * breite * .18,
-          tempo: .12 + Math.random() * .2,
+          tempo: .09 + Math.random() * .14,
           phase: Math.random(),
           dicke: .8 + Math.random() * 1.2,
           warm: i % 3 === 0
@@ -704,7 +704,15 @@
                           a.x1 - a.krumm, hoehe * .66,
                           a.x1, hoehe);
         ctx.lineWidth = a.dicke;
-        ctx.strokeStyle = a.warm ? 'rgba(122, 90, 240, .20)' : 'rgba(47, 174, 132, .18)';
+        /* Von oben kräftig, nach unten auslaufend: So brechen die Adern
+           nicht ab, sondern lösen sich im nächsten Abschnitt auf. */
+        var verlauf = ctx.createLinearGradient(0, 0, 0, hoehe);
+        var ton = a.warm ? '122, 90, 240' : '47, 174, 132';
+        verlauf.addColorStop(0, 'rgba(' + ton + ', .30)');
+        verlauf.addColorStop(.45, 'rgba(' + ton + ', .22)');
+        verlauf.addColorStop(.8, 'rgba(' + ton + ', .09)');
+        verlauf.addColorStop(1, 'rgba(' + ton + ', 0)');
+        ctx.strokeStyle = verlauf;
         ctx.stroke();
 
         /* Lichtpunkt, der die Ader entlangwandert */
@@ -718,7 +726,9 @@
                + 3 * mf * f * f * hoehe * .66
                + f * f * f * hoehe;
 
-        var glanz = Math.sin(f * Math.PI);
+        /* Der Punkt verliert zum unteren Ende hin an Kraft, damit er nicht
+           an der Abbruchkante verschwindet. */
+        var glanz = Math.sin(f * Math.PI) * (1 - Math.pow(f, 2.2));
         var g = ctx.createRadialGradient(px, py, 0, px, py, 26);
         var farbe = a.warm ? '122, 90, 240' : '47, 174, 132';
         g.addColorStop(0, 'rgba(' + farbe + ',' + (.5 * glanz) + ')');
