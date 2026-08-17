@@ -9,14 +9,22 @@ Story statt Video-Scrubbing). Die Seite bleibt also jederzeit funktionsfähig.
 
 ---
 
-## 1. Hero-Video (zentrales Storytelling-Asset)
+## 1. Hero-Video — **vorhanden**
 
-| Pfad | Zweck | Pflicht |
+Das gelieferte Video ist encodiert und eingebaut. Quelle: 1280 × 720, 10,08 s.
+
+| Pfad | Zweck | Größe |
 |---|---|---|
-| `public/videos/hero-story.mp4` | Desktop/Laptop, H.264 | **ja** |
-| `public/videos/hero-story-mobile.mp4` | Portrait/Mobile, kleinere Auflösung | empfohlen |
-| `public/videos/hero-story.webm` | VP9-Alternative für Chrome/Firefox | optional |
-| `public/images/hero-poster.jpg` | Erstes Frame, wird vor dem Laden gezeigt | **ja** |
+| `public/videos/hero-story.webm` | VP9, wird von Chrome/Firefox/Edge bevorzugt | 3,5 MB |
+| `public/videos/hero-story.mp4` | H.264, für Safari und ältere Browser | 3,9 MB |
+| `public/videos/hero-story-mobile.mp4` | 720 px breit, für Mobilgeräte | 1,4 MB |
+| `public/images/hero-poster.jpg` | erstes Bild, vor dem Laden sichtbar | 70 KB |
+
+Der Browser wählt selbst: Desktop nimmt WebM, wenn er VP9 kann, sonst MP4;
+Mobilgeräte laden die kleine MP4. Fällt eine Datei aus, rückt die nächste nach.
+
+**Zum Austauschen** genügt es, die Dateien mit denselben Namen zu ersetzen —
+mit den Befehlen weiter unten, damit die Keyframe-Dichte erhalten bleibt.
 
 ### Wichtig: Encoding für flüssiges Scroll-Scrubbing
 
@@ -50,11 +58,22 @@ ffmpeg -i original.mp4 -vframes 1 -q:v 3 public/images/hero-poster.jpg
 - **Zielgröße:** Desktop < 12 MB, Mobile < 4 MB. GitHub Pages hat ein weiches Limit von
   100 MB pro Datei, aber alles über ~15 MB kostet spürbar Ladezeit.
 
-### Timing der Texte an das Video anpassen
+### Timing der Texte — bereits auf dieses Video abgestimmt
 
-Die Story-Texte sind an Fortschrittswerte von 0 bis 1 gekoppelt. Nach dem Einsetzen des
-echten Videos die Werte in `index.html` justieren — jeder Textblock trägt sie direkt am
-Element:
+Die Texte sitzen auf den tatsächlichen Bildwechseln der gelieferten Aufnahme:
+
+| Fortschritt | Videozeit | Bild | Text |
+|---|---|---|---|
+| 0 – 0,19 | 0 – 1,9 s | Ladenlokal bei Nacht | „Ihr Betrieb ist real." |
+| 0,19 – 0,31 | 1,9 – 3,1 s | Lichtraster entsteht | „Jeden Tag sucht jemand …" |
+| 0,31 – 0,475 | 3,1 – 4,8 s | Browserfenster erscheint | „Webdesign" |
+| 0,475 – 0,595 | 4,8 – 6,0 s | Verbindungen breiten sich aus | „Digital Marketing" |
+| 0,595 – 0,745 | 6,0 – 7,5 s | Kunden erscheinen | „Mehr Sichtbarkeit. Mehr Anfragen." |
+| 0,745 – 0,855 | 7,5 – 8,6 s | Verdichtung, Kamera fährt zurück | „Aus Klicks werden Kunden." |
+| 0,855 – 1,0 | 8,6 – 10,08 s | Wachstums-Ökosystem | Handlungsaufruf |
+
+Wird das Video ausgetauscht, müssen diese Werte neu gesetzt werden — jeder Textblock
+trägt sie direkt am Element:
 
 ```html
 <div class="beat" data-start="0.28" data-end="0.44"> … </div>

@@ -113,8 +113,10 @@
     <!--
       Das Video wird per Scrollposition gescrubbt (assets/js/story.js).
       Die data-start/data-end Werte an den .beat Elementen sind Fortschrittswerte
-      von 0 bis 1 und werden nach dem Einsetzen des echten Videos feinjustiert.
-      Kalibrierhilfe: ?debug=1 an die URL hängen.
+      von 0 bis 1 und auf die Bildwechsel des Videos abgestimmt (Laufzeit 10,08 s):
+      Laden 0-1,9 s | Lichtraster 1,9-3,1 s | Website 3,1-4,8 s |
+      Verbindungen 4,8-6,0 s | Kunden 6,0-7,5 s | Verdichtung 7,5-8,6 s |
+      Wachstum ab 8,6 s. Kalibrierhilfe: ?debug=1 an die URL hängen.
     -->
     <section class="story" id="story" data-story aria-labelledby="story-headline">
       <div class="story__stage" data-stage>
@@ -131,7 +133,7 @@
         <div class="stage__beats">
 
           <!-- 01 — Der Betrieb -->
-          <article class="beat beat--opening is-active" data-start="0" data-end="0.14">
+          <article class="beat beat--opening is-active" data-start="0" data-end="0.19">
             <p class="beat__eyebrow">01 — Der Betrieb</p>
             <h1 class="beat__display" id="story-headline">
               Ihr Betrieb ist real.<br><em>Ihre Kunden suchen digital.</em>
@@ -142,7 +144,7 @@
             </p>
           </article>
 
-          <article class="beat" data-start="0.14" data-end="0.28">
+          <article class="beat" data-start="0.19" data-end="0.31">
             <p class="beat__statement">
               Jeden Tag sucht jemand genau das, was Sie anbieten.<br>
               <em>Und findet einen anderen.</em>
@@ -150,7 +152,7 @@
           </article>
 
           <!-- 02 — Die Website -->
-          <article class="beat" data-start="0.28" data-end="0.44">
+          <article class="beat" data-start="0.31" data-end="0.475">
             <p class="beat__eyebrow">02 — Die Website</p>
             <h2 class="beat__display beat__display--word">Webdesign</h2>
             <p class="beat__lead">
@@ -160,7 +162,7 @@
           </article>
 
           <!-- 03 — Die Sichtbarkeit -->
-          <article class="beat" data-start="0.44" data-end="0.60">
+          <article class="beat" data-start="0.475" data-end="0.595">
             <p class="beat__eyebrow">03 — Die Sichtbarkeit</p>
             <h2 class="beat__display beat__display--word">Digital<br>Marketing</h2>
             <p class="beat__lead">
@@ -169,7 +171,7 @@
             </p>
           </article>
 
-          <article class="beat" data-start="0.60" data-end="0.74">
+          <article class="beat" data-start="0.595" data-end="0.745">
             <p class="beat__statement">
               Mehr Sichtbarkeit.<br>
               <em class="beat__swap">Mehr Anfragen.</em>
@@ -177,7 +179,7 @@
           </article>
 
           <!-- 04 — Das Wachstum -->
-          <article class="beat" data-start="0.74" data-end="0.87">
+          <article class="beat" data-start="0.745" data-end="0.855">
             <p class="beat__eyebrow">04 — Das Wachstum</p>
             <h2 class="beat__display">Aus Klicks<br>werden Kunden.</h2>
             <p class="beat__lead">
@@ -187,7 +189,7 @@
           </article>
 
           <!-- CTA -->
-          <article class="beat beat--cta" data-start="0.87" data-end="1.001">
+          <article class="beat beat--cta" data-start="0.855" data-end="1.001">
             <p class="beat__eyebrow">Bereit?</p>
             <h2 class="beat__display">Lassen Sie uns bauen,<br>was als Nächstes kommt.</h2>
             <p class="beat__lead">
@@ -202,13 +204,13 @@
         </div>
 
         <ol class="rail" data-rail aria-label="Fortschritt der Geschichte">
-          <li class="rail__step is-active" data-from="0" data-to="0.28"><span class="rail__num">01</span><span
+          <li class="rail__step is-active" data-from="0" data-to="0.31"><span class="rail__num">01</span><span
               class="rail__name">Betrieb</span></li>
-          <li class="rail__step" data-from="0.28" data-to="0.44"><span class="rail__num">02</span><span
+          <li class="rail__step" data-from="0.31" data-to="0.475"><span class="rail__num">02</span><span
               class="rail__name">Website</span></li>
-          <li class="rail__step" data-from="0.44" data-to="0.74"><span class="rail__num">03</span><span
+          <li class="rail__step" data-from="0.475" data-to="0.745"><span class="rail__num">03</span><span
               class="rail__name">Marketing</span></li>
-          <li class="rail__step" data-from="0.74" data-to="1.001"><span class="rail__num">04</span><span
+          <li class="rail__step" data-from="0.745" data-to="1.001"><span class="rail__num">04</span><span
               class="rail__name">Wachstum</span></li>
         </ol>
 

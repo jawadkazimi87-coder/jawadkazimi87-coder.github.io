@@ -30,7 +30,9 @@
   --face-mono: 'Martian Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   --step-display: clamp(2.7rem, 7.4vw, 7.2rem);
-  --step-word: clamp(3.2rem, 9.4vw, 8.6rem);
+  /* Bewusst kleiner als der Auftakt: In dieser Passage steht das
+     Browserfenster in der Bildmitte und darf nicht verdeckt werden. */
+  --step-word: clamp(3.2rem, 7.6vw, 6.8rem);
   --step-title: clamp(2.1rem, 5vw, 4.4rem);
   --step-lead: clamp(1rem, 1.25vw, 1.2rem);
   --step-label: clamp(.62rem, .74vw, .72rem);
@@ -459,7 +461,7 @@ section[id] {
   z-index: 2;
   display: grid;
   align-items: end;
-  padding: 0 var(--gutter) clamp(6.5rem, 15vh, 10.5rem);
+  padding: 0 var(--gutter) clamp(5.5rem, 12vh, 8.5rem);
   pointer-events: none;
 }
 
@@ -485,6 +487,7 @@ section[id] {
   letter-spacing: .24em;
   text-transform: uppercase;
   color: var(--bone-dim);
+  text-shadow: 0 1px 10px rgba(4, 6, 10, .9);
 }
 
 .beat__eyebrow::before {
@@ -609,6 +612,9 @@ section[id] {
   text-transform: uppercase;
   color: var(--bone-faint);
   transition: color .5s ease;
+  /* Im Schlussbild liegt die Anzeige über hellen Datenflächen des Videos —
+     der Schatten hält sie lesbar, ohne eine Fläche einzuziehen. */
+  text-shadow: 0 1px 10px rgba(4, 6, 10, .95), 0 0 3px rgba(4, 6, 10, .8);
 }
 
 .rail__step::after {
@@ -1445,6 +1451,103 @@ section[id] {
     bottom: 1.1rem;
     right: var(--gutter);
     left: auto;
+  }
+}
+
+/* Im Hochformat würde ein formatfüllender Zuschnitt vom 16:9-Bild nur dessen
+   Mitte übrig lassen — Ladenlokal, Verbindungen und Ökosystem gingen
+   verloren, und genau die tragen die Geschichte. Das Video läuft deshalb
+   als vollständige Aufnahme in einem Band im oberen Bilddrittel, dessen
+   Kanten in den Seitengrund auslaufen. Der Text steht darunter und
+   verdeckt nie einen Teil des Bildes. */
+@media (max-width: 860px) and (orientation: portrait) {
+  .stage__media {
+    top: 9svh;
+    bottom: auto;
+    height: calc(100vw * 0.5625);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* Alle Textblöcke setzen an derselben Kante unter dem Band an — wie eine
+     Bauchbinde im Film. Dadurch kann kein Beat ins Bild hineinwachsen,
+     auch der lange Schlussblock mit den beiden Schaltflächen nicht. */
+  .stage__beats {
+    align-items: start;
+    padding-top: calc(9svh + 100vw * 0.5625 + 1.4rem);
+    padding-bottom: clamp(5rem, 13vh, 7rem);
+  }
+
+  .beat--cta .beat__display {
+    font-size: clamp(1.85rem, 7.6vw, 2.6rem);
+    max-width: 100%;
+  }
+
+  .beat__actions {
+    margin-top: 1.6rem;
+    gap: .7rem;
+  }
+
+  .beat__actions .btn {
+    flex: 1 1 46%;
+    padding-inline: 1rem;
+  }
+
+  .stage__grade {
+    background: linear-gradient(180deg,
+        #06070A 0%, rgba(6, 7, 10, .12) 12%,
+        rgba(6, 7, 10, .12) 88%, #06070A 100%);
+  }
+
+  .stage__vignette {
+    display: none;
+  }
+
+  .story__stage.no-video .stage__media::after {
+    opacity: .5;
+  }
+}
+
+/* Kleine Geräte mit wenig Bauhöhe: Band und Schriftgrade zusammenziehen,
+   damit zwischen Video und Kapitelanzeige alles Platz findet. */
+@media (max-width: 860px) and (orientation: portrait) and (max-height: 720px) {
+  .stage__media {
+    top: 5svh;
+  }
+
+  .stage__beats {
+    padding-top: calc(5svh + 100vw * 0.5625 + 1rem);
+    padding-bottom: clamp(4.5rem, 11vh, 6rem);
+  }
+
+  .beat__display {
+    font-size: clamp(1.75rem, 8.2vw, 2.4rem);
+  }
+
+  .beat__display--word {
+    font-size: clamp(1.9rem, 9.4vw, 2.8rem);
+  }
+
+  .beat__statement {
+    font-size: clamp(1.5rem, 6.6vw, 2rem);
+  }
+
+  .beat__lead {
+    font-size: .88rem;
+    margin-top: 1rem;
+  }
+
+  .beat--cta .beat__display {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+  }
+
+  .beat__actions {
+    margin-top: 1.1rem;
+  }
+
+  .beat__actions .btn {
+    padding-block: .85rem;
   }
 }
 
