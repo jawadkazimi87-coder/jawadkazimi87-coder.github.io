@@ -104,25 +104,25 @@ Fortschritt und die Videozeit live angezeigt.
 
 ---
 
-## 2. Referenzbilder (Sektion „Arbeiten")
+## 2. Leistungsbilder — **vorhanden**
 
-| Pfad | Empfohlen |
-|---|---|
-| `public/images/work/projekt-01.jpg` | 1600 × 1100 px, JPG oder WebP |
-| `public/images/work/projekt-02.jpg` | 1600 × 1100 px |
-| `public/images/work/projekt-03.jpg` | 1600 × 1100 px |
+| Pfad | Motiv | Größe |
+|---|---|---|
+| `public/images/services/webdesign.jpg` | Tablet mit Wireframe | 140 KB |
+| `public/images/services/entwicklung.jpg` | 3D-Arbeitsplatz mit Code | 94 KB |
+| `public/images/services/shop.jpg` | Onlineshop auf Notebook | 122 KB |
+| `public/images/services/sichtbarkeit.jpg` | Schreibtisch mit Auswertung | 112 KB |
 
-Die Projekt-Texte in `index.html` enthalten Platzhalter in eckigen Klammern
-(z. B. `[Kundenname]`, `[Kennzahl]`). Diese bitte durch echte Angaben ersetzen —
-es wurden bewusst keine erfundenen Fallzahlen eingetragen.
+Alle vier auf 1600 × 1100 px zugeschnitten und komprimiert (zusammen 484 KB
+statt ursprünglich 7,2 MB). Beim Austausch dasselbe Format verwenden:
 
-## 3. Porträt (Sektion „Über")
+```bash
+ffmpeg -i original.jpg \
+  -vf "scale=w=1600:h=1100:force_original_aspect_ratio=increase,crop=1600:1100" \
+  -q:v 5 public/images/services/<name>.jpg
+```
 
-| Pfad | Empfohlen |
-|---|---|
-| `public/images/portrait-jawad.jpg` | 1200 × 1500 px, Hochformat |
-
-## 4. Social-Media-Vorschaubild
+## 3. Social-Media-Vorschaubild
 
 | Pfad | Empfohlen |
 |---|---|
