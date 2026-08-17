@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jawad Kazimi — Digital Marketing Spezialist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --cream: #FAF7F2;
+      --warm-white: #FFFFFF;
+      --gold: #B8860B;
+      --gold-bright: #D4A017;
+      --gold-light: #F5E6B8;
+      --gold-pale: #FDF6E0;
+      --ink: #1A1508;
+      --text: #2C2410;
+      --muted: #8A7A5A;
+      --border: rgba(184, 134, 11, 0.18);
+      --border-strong: rgba(184, 134, 11, 0.35);
+      --teal: #0E7C72;
+      --teal-light: #E0F5F3;
+      --coral: #C94B2A;
+      --coral-light: #FDEEE8;
+      --surface: #FFFDF8;
+      --surface2: #FDF8EE;
+      --shadow: rgba(26, 21, 8, 0.08);
+      --shadow-strong: rgba(26, 21, 8, 0.14);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Cursor */
+    .cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .2s, height .2s;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 38px;
+      height: 38px;
+      border: 1.5px solid rgba(184, 134, 11, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform .18s ease-out, width .25s, height .25s;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.1rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250, 247, 242, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 0;
+      padding: 7rem 0 0 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-left {
+      padding: 5rem 4rem 5rem 3.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-right {
+      background: var(--gold-pale);
+      height: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right-inner {
+      padding: 4rem 3rem;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .hero-bg-circles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184, 134, 11, 0.12), transparent 70%);
+    }
+
+    .circle-1 {
+      width: 500px;
+      height: 500px;
+      top: -100px;
+      right: -100px;
+    }
+
+    .circle-2 {
+      width: 300px;
+      height: 300px;
+      bottom: 50px;
+      left: -80px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      color: var(--teal);
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 2.5rem;
+      height: 1px;
+      background: var(--teal);
+    }
+
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      font-weight: 700;
+      line-height: 0.95;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-tagline {
+      font-size: 1rem;
+      color: var(--muted);
+      margin: 1.6rem 0 2.5rem;
+      max-width: 420px;
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      background: var(--gold);
+      color: white;
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: background .3s, transform .2s;
+      box-shadow: 0 4px 20px rgba(184, 134, 11, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-bright);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      border: 1.5px solid var(--border-strong);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: all .3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--gold-pale);
+    }
+
+    .hero-stats {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    /* Right panel cards */
+    .panel-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .info-card {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 12px var(--shadow);
+      transition: transform .3s, box-shadow .3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+    }
+
+    .info-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 6px 24px var(--shadow-strong);
+    }
+
+    .info-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+
+    .info-card-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .info-card-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      margin-top: 0.4rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .badge-teal {
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+
+    .badge-gold {
+      background: var(--gold-pale);
+      color: var(--gold);
+    }
+
+    .badge-coral {
+      background: var(--coral-light);
+      color: var(--coral);
+    }
+
+    /* Section base */
+    section {
+      padding: 7rem 3.5rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .sec-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--teal);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .sec-label::after {
+      content: '';
+      flex: 0 0 2rem;
+      height: 1px;
+      background: var(--teal);
+    }
+
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+    }
+
+    .sec-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    /* Story */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 4rem;
+    }
+
+    .story-text p {
+      color: rgba(44, 36, 16, 0.72);
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      line-height: 1.9;
+    }
+
+    .story-text p strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .quote-card {
+      background: var(--gold-pale);
+      border: 1px solid var(--border-strong);
+      padding: 2rem 2.2rem;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .quote-card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      color: var(--gold);
+      line-height: 0;
+      position: absolute;
+      top: 2.2rem;
+      left: 1.5rem;
+      opacity: 0.3;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      line-height: 1.65;
+      color: var(--ink);
+      padding-left: 0.5rem;
+    }
+
+    .journey-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .chip {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.9rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      box-shadow: 0 1px 4px var(--shadow);
+    }
+
+    .chip.highlight {
+      background: var(--gold-pale);
+      color: var(--gold);
+      border-color: var(--border-strong);
+    }
+
+    /* Metrics band */
+    .metrics-band {
+      background: var(--ink);
+      padding: 4rem 3.5rem;
+    }
+
+    .metrics-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .metric-box {
+      background: var(--ink);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: background .3s;
+    }
+
+    .metric-box:hover {
+      background: #221C0A;
+    }
+
+    .metric-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold-bright), #F5E6B8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .metric-label {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+    }
+
+    /* Timeline */
+    .timeline {
+      margin-top: 4.5rem;
+    }
+
+    .tl-item {
+      display: grid;
+      grid-template-columns: 160px 1px 1fr;
+      gap: 0 2rem;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .tl-date-col {
+      text-align: right;
+      padding: 0 0 3rem 0;
+      padding-top: 0.1rem;
+    }
+
+    .tl-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .tl-type {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .tl-line-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tl-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 0 4px var(--gold-pale);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+      z-index: 1;
+    }
+
+    .tl-line {
+      width: 1px;
+      flex: 1;
+      background: linear-gradient(to bottom, var(--border-strong), var(--border));
+    }
+
+    .tl-content-col {
+      padding: 0 0 3rem 0;
+      padding-left: 0;
+    }
+
+    .tl-card {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 1.5rem 1.8rem;
+      box-shadow: 0 2px 16px var(--shadow);
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    .tl-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px var(--shadow-strong);
+    }
+
+    .tl-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+
+    .tl-org {
+      font-size: 0.8rem;
+      color: var(--gold);
+      margin-bottom: 0.7rem;
+      font-weight: 500;
+    }
+
+    .tl-desc {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .proj-card {
+      background: white;
+      border: 1px solid var(--border);
+      padding: 2.2rem 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 16px var(--shadow);
+      transition: transform .35s, box-shadow .35s;
+      cursor: none;
+    }
+
+    .proj-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-bright));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .4s;
+    }
+
+    .proj-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px var(--shadow-strong);
+    }
+
+    .proj-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .proj-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.4rem;
+    }
+
+    .proj-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.7rem;
+      line-height: 1.2;
+    }
+
+    .proj-desc {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .ptag {
+      font-size: 0.63rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.65rem;
+    }
+
+    .ptag-gold {
+      background: var(--gold-pale);
+      color: var(--gold);
+    }
+
+    .ptag-teal {
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+
+    .ptag-gray {
+      background: #F5F3EF;
+      color: var(--muted);
+    }
+
+    /* Skills */
+    .skills-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      margin-top: 4rem;
+    }
+
+    .skill-group {
+      margin-bottom: 2.5rem;
+    }
+
+    .skill-group-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.66rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-row-wrap {
+      margin-bottom: 1rem;
+    }
+
+    .skill-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .skill-pct {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+    }
+
+    .skill-track {
+      height: 3px;
+      background: var(--gold-pale);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--gold), var(--gold-bright));
+      width: 0;
+      transition: width 1.3s cubic-bezier(.4, 0, .2, 1);
+      border-radius: 2px;
+    }
+
+    .skill-fill.on {
+      width: var(--w);
+    }
+
+    .lang-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .lang-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1.1rem 1.2rem;
+      box-shadow: 0 1px 6px var(--shadow);
+    }
+
+    .lang-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--ink);
+      margin-bottom: 0.15rem;
+    }
+
+    .lang-lvl {
+      font-size: 0.72rem;
+      color: var(--gold);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .lang-pips {
+      display: flex;
+      gap: 4px;
+      margin-top: 0.5rem;
+    }
+
+    .pip {
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--gold-pale);
+    }
+
+    .pip.on {
+      background: var(--gold);
+    }
+
+    /* Contact */
+    .contact-wrap {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 4rem;
+      max-width: 1100px;
+      margin: 4rem auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      box-shadow: 0 4px 32px var(--shadow);
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .contact-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--gold-pale);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      color: var(--gold);
+      flex-shrink: 0;
+      border-radius: 50%;
+    }
+
+    .contact-intro {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .flabel {
+      font-size: 0.67rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .finput,
+    .ftextarea {
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem 1rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      resize: none;
+      transition: border-color .25s;
+    }
+
+    .finput:focus,
+    .ftextarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-submit {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+      background: var(--gold);
+      color: white;
+      border: none;
+      padding: 0.9rem 2.2rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: none;
+      transition: background .3s, transform .2s;
+      box-shadow: 0 4px 16px rgba(184, 134, 11, 0.3);
+    }
+
+    .form-submit:hover {
+      background: var(--gold-bright);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    footer {
+      padding: 2rem 3.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* Decorative line */
+    .divider-line {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    /* Reveals */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .9s ease, transform .9s ease;
+    }
+
+    .reveal-up.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .d1 {
+      transition-delay: .1s;
+    }
+
+    .d2 {
+      transition-delay: .2s;
+    }
+
+    .d3 {
+      transition-delay: .3s;
+    }
+
+    .d4 {
+      transition-delay: .4s;
+    }
+
+    /* Floating dots decoration */
+    .dot-deco {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold-pale);
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="ring"></div>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-logo">Jawad Kazimi</div>
+    <ul class="nav-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#journey">Werdegang</a></li>
+      <li><a href="#projekte">Projekte</a></li>
+      <li><a href="#skills">Expertise</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Digital Marketing Spezialist · Berlin</div>
+      <h1 class="hero-name">Jawad<em>Kazimi</em></h1>
+      <p class="hero-tagline">Ich bringe Marken dorthin, wo ihre Kunden suchen — auf Seite 1. Datenbasiert. Messbar.
+        Wirksam.</p>
+      <div class="hero-ctas">
+        <a href="#kontakt" class="btn-primary">Zusammenarbeiten ↗</a>
+        <a href="#projekte" class="btn-outline">Projekte ansehen</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" data-count="2">0</span>
+          <span class="stat-label">Jahre Erfahrung</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-count="4">0</span>
+          <span class="stat-label">Projekte live</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-count="4">0</span>
+          <span class="stat-label">Sprachen</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-count="3">0</span>
+          <span class="stat-label">Abschlüsse</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-bg-circles">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+      </div>
+      <div class="hero-right-inner">
+        <div class="panel-label">Aktuelle Positionen</div>
+
+        <div class="info-card">
+          <div class="info-card-title">MSc Digital Marketing (UCA)</div>
+          <div class="info-card-sub">Berlin School of Business and Innovation</div>
+          <div class="info-card-date">2024 – Sep 2025 (laufend)</div>
+          <span class="badge badge-teal">Laufend</span>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Gründer — Market Trend</div>
+          <div class="info-card-sub">KI-gestütztes Content-Tool für Marketer</div>
+          <div class="info-card-date">Seit 2024</div>
+          <span class="badge badge-gold">Eigenprojekt</span>
+        </div>
+
+        <div class="info-card">
+          <div class="info-card-title">Freiberuflicher SEO-Spezialist</div>
+          <div class="info-card-sub">globalux.de · tidyhomeservice.de</div>
+          <div class="info-card-date">Jan – Sep 2025</div>
+          <span class="badge badge-coral">Freelance</span>
+        </div>
+
+        <div style="margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+          <div class="panel-label" style="margin-bottom:0.8rem;">Werkzeuge</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+            <span class="badge badge-gold">Google Ads</span>
+            <span class="badge badge-gold">Meta Ads</span>
+            <span class="badge badge-teal">SEO</span>
+            <span class="badge badge-teal">Looker Studio</span>
+            <span class="badge badge-gold">TikTok Ads</span>
+            <span class="badge badge-teal">WordPress</span>
+            <span class="badge badge-gold">GTM</span>
+            <span class="badge badge-teal">DV360</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section id="story" style="background: white;">
+    <div class="container">
+      <div class="sec-label reveal">Über mich</div>
+      <h2 class="sec-title reveal">Von Kabul nach Berlin —<br><em>eine Geschichte über Wachstum</em></h2>
+      <div class="story-grid">
+        <div class="story-text reveal">
+          <p>Ich bin in Afghanistan aufgewachsen, habe in Indien einen MBA abgeschlossen und bin heute in Berlin — der
+            Stadt der Möglichkeiten. Mein Weg ist nicht geradlinig. Aber genau das hat mich gelehrt, was Marketing im
+            Kern bedeutet: <strong>Anpassungsfähigkeit, Beharrlichkeit und der Mut, neue Märkte zu erschließen.</strong>
+          </p>
+          <p>Als Digital Marketing Spezialist mit einem MSc in Digital Marketing (BSBI Berlin, UCA) verbinde ich
+            akademisches Fachwissen mit echten Praxisergebnissen. Ich habe Websites gebaut, SEO-Strategien entwickelt
+            und Kampagnen auf Google, Meta und TikTok gesteuert — immer mit Fokus auf die Zahlen, die wirklich zählen.
+          </p>
+          <p>Ich bin <strong>Gründer von Market Trend</strong>, einem KI-gestützten Tool, das digitalen Marketern hilft,
+            täglich relevante Content-Ideen zu generieren. Denn wer den Trend versteht, gewinnt das Rennen um
+            Aufmerksamkeit.</p>
+        </div>
+        <div class="reveal d2">
+          <div class="quote-card">
+            <p class="quote-text">Sichtbarkeit ist kein Zufall — sie ist das Ergebnis von Strategie, Daten und der
+              richtigen Botschaft zur richtigen Zeit.</p>
+          </div>
+          <div class="journey-chips">
+            <span class="chip highlight">🇦🇫 Kabul</span>
+            <span class="chip">Agribusiness BSc</span>
+            <span class="chip highlight">🇮🇳 MBA Chandigarh</span>
+            <span class="chip">Marketing Executive</span>
+            <span class="chip highlight">🇩🇪 Berlin 2023</span>
+            <span class="chip">MSc Digital Marketing</span>
+            <span class="chip highlight">🚀 Market Trend</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics Band -->
+  <div class="metrics-band">
+    <div class="metrics-inner">
+      <div class="metric-box reveal">
+        <div class="metric-num" data-count="3">0</div>
+        <div class="metric-label">Live-Websites<br>als Freelancer gebaut</div>
+      </div>
+      <div class="metric-box reveal d1">
+        <div class="metric-num" data-count="4">0</div>
+        <div class="metric-label">Sprachen<br>fließend gesprochen</div>
+      </div>
+      <div class="metric-box reveal d2">
+        <div class="metric-num" data-count="2">0</div>
+        <div class="metric-label">Jahre als Marketing<br>Executive bei ACME</div>
+      </div>
+      <div class="metric-box reveal d3">
+        <div class="metric-num" data-count="1">0</div>
+        <div class="metric-label">KI-Tool<br>selbst gegründet</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Journey / Timeline -->
+  <section id="journey" style="background: var(--cream);">
+    <div class="container">
+      <div class="sec-label reveal">Werdegang</div>
+      <h2 class="sec-title reveal">Der <em>Weg,</em> der<br>mich hierher brachte</h2>
+
+      <div class="timeline">
+
+        <div class="tl-item reveal">
+          <div class="tl-date-col">
+            <span class="tl-date">2024 – laufend</span>
+            <span class="tl-type">Bildung</span>
+          </div>
+          <div class="tl-line-col">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content-col">
+            <div class="tl-card">
+              <div class="tl-title">MSc in Digital Marketing (UCA)</div>
+              <div class="tl-org">Berlin School of Business and Innovation (BSBI) · voraussichtl. Sep 2025</div>
+              <p class="tl-desc">Vertiefung in Performance Marketing, Datenanalyse, SEO und digitale
+                Strategieentwicklung an einer der renommiertesten Business Schools Berlins.</p>
+              <span class="badge badge-teal">Laufend</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal d1">
+          <div class="tl-date-col">
+            <span class="tl-date">Jul – Sep 2025</span>
+            <span class="tl-type">Freelance</span>
+          </div>
+          <div class="tl-line-col">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content-col">
+            <div class="tl-card">
+              <div class="tl-title">Freiberuflicher SEO-Spezialist</div>
+              <div class="tl-org">Projekt: globalux.de</div>
+              <p class="tl-desc">Entwicklung einer responsiven Website, gezielte On-Page-SEO und Steuerung von
+                Google/Meta-Kampagnen zur Leadgenerierung. Keyword-Rankings messbar auf Seite 1 verbessert.</p>
+              <span class="badge badge-gold">SEO</span>
+              <span class="badge badge-teal">Google Ads</span>
+              <span class="badge badge-coral">Meta</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal d1">
+          <div class="tl-date-col">
+            <span class="tl-date">Jan – Mär 2025</span>
+            <span class="tl-type">Freelance</span>
+          </div>
+          <div class="tl-line-col">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content-col">
+            <div class="tl-card">
+              <div class="tl-title">Freiberuflicher SEO-Spezialist</div>
+              <div class="tl-org">Projekt: tidyhomeservice.de</div>
+              <p class="tl-desc">Kompletter Webauftritt mit responsivem Design, Keyword-Recherche, Meta-Tags und
+                technischen SEO-Maßnahmen. Organische Sichtbarkeit und Rankings nachweislich gesteigert.</p>
+              <span class="badge badge-gold">WordPress</span>
+              <span class="badge badge-teal">On-Page SEO</span>
+              <span class="badge badge-teal">Analytics</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date-col">
+            <span class="tl-date">Mai 2021 – Mai 2023</span>
+            <span class="tl-type">Vollzeit</span>
+          </div>
+          <div class="tl-line-col">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-content-col">
+            <div class="tl-card">
+              <div class="tl-title">Digital Marketing Executive</div>
+              <div class="tl-org">ACME HR Consulting</div>
+              <p class="tl-desc">Verantwortung für die gesamte digitale Präsenz: Website, SEO, Social Media (Facebook,
+                Instagram, LinkedIn) und Kampagnen. Erstellung von Grafiken und zielgruppengerechten Inhalten zur
+                Steigerung von Markenbekanntheit und Engagement.</p>
+              <span class="badge badge-gold">2 Jahre · Vollzeit</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date-col">
+            <span class="tl-date">2019 – 2021</span>
+            <span class="tl-type">Bildung</span>
+          </div>
+          <div class="tl-line-col">
+            <div class="tl-dot"></div>
+            <div class="tl-line" style="background: linear-gradient(to bottom, var(--border), transparent)"></div>
+          </div>
+          <div class="tl-content-col">
+            <div class="tl-card">
+              <div class="tl-title">MBA – Master der Betriebswirtschaftslehre</div>
+              <div class="tl-org">Chandigarh University, Indien</div>
+              <p class="tl-desc">Fundiertes betriebswirtschaftliches Wissen mit Fokus auf Strategie, Marketing und
+                Management in einem internationalen Umfeld.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projekte" style="background: white;">
+    <div class="container">
+      <div class="sec-label reveal">Projekte</div>
+      <h2 class="sec-title reveal">Websites, die <em>ranken</em><br>und konvertieren</h2>
+      <div class="projects-grid">
+        <div class="proj-card reveal">
+          <div class="proj-num">01 · Freelance 2025</div>
+          <div class="proj-name">globalux.de</div>
+          <p class="proj-desc">Responsive Website mit gezielten Google- und Meta-Kampagnen zur Leadgenerierung.
+            SEO-Strategie mit messbarer Steigerung der Sichtbarkeit und Keyword-Rankings auf Seite 1.</p>
+          <div class="proj-tags">
+            <span class="ptag ptag-gold">SEO</span>
+            <span class="ptag ptag-gold">Google Ads</span>
+            <span class="ptag ptag-teal">Meta</span>
+            <span class="ptag ptag-gray">Webdesign</span>
+          </div>
+        </div>
+        <div class="proj-card reveal d1">
+          <div class="proj-num">02 · Freelance 2025</div>
+          <div class="proj-name">tidyhomeservice.de</div>
+          <p class="proj-desc">Vollständiger Webauftritt für einen Reinigungsservice. Responsives Layout, technische SEO
+            und kontinuierliches Performance-Monitoring mit nachweislicher Ranking-Verbesserung.</p>
+          <div class="proj-tags">
+            <span class="ptag ptag-gold">On-Page SEO</span>
+            <span class="ptag ptag-teal">WordPress</span>
+            <span class="ptag ptag-gray">Analytics</span>
+          </div>
+        </div>
+        <div class="proj-card reveal d2">
+          <div class="proj-num">03 · Eigenprojekt · laufend</div>
+          <div class="proj-name">Market Trend</div>
+          <p class="proj-desc">KI-gestütztes Tool für digitale Marketer: analysiert Echtzeit-Trends und generiert sofort
+            nutzbare Content-Ideen für Social Media, Kampagnen und tägliche Postings.</p>
+          <div class="proj-tags">
+            <span class="ptag ptag-gold">KI / AI</span>
+            <span class="ptag ptag-teal">Social Media</span>
+            <span class="ptag ptag-gray">Content</span>
+            <span class="ptag ptag-gold">SaaS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" style="background: var(--cream);">
+    <div class="container">
+      <div class="sec-label reveal">Expertise</div>
+      <h2 class="sec-title reveal">Werkzeuge, die<br><em>Ergebnisse</em> liefern</h2>
+      <div class="skills-wrap">
+        <div class="reveal">
+          <div class="skill-group">
+            <div class="skill-group-label">Marketing & SEO</div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>SEO (On-Page & Technisch)</span><span class="skill-pct">92%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:92%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>Google Ads / SEM</span><span class="skill-pct">88%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:88%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>Meta Business Manager</span><span class="skill-pct">85%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:85%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>Social Media Marketing</span><span class="skill-pct">90%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:90%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>Content-Strategie</span><span class="skill-pct">87%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:87%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-label">Analytics & Plattformen</div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>Looker Studio / DV360</span><span class="skill-pct">80%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:80%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>Google Tag Manager</span><span class="skill-pct">82%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:82%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>TikTok & Amazon Ads</span><span class="skill-pct">75%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal d2">
+          <div class="skill-group">
+            <div class="skill-group-label">Design & Web</div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>WordPress / Wix</span><span class="skill-pct">88%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:88%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>Canva / Adobe Photoshop</span><span class="skill-pct">85%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:85%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>Adobe Express</span><span class="skill-pct">80%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:80%"></div>
+              </div>
+            </div>
+            <div class="skill-row-wrap">
+              <div class="skill-row"><span>KI-Tools</span><span class="skill-pct">90%</span></div>
+              <div class="skill-track">
+                <div class="skill-fill" style="--w:90%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-label">Sprachen</div>
+            <div class="lang-grid">
+              <div class="lang-card">
+                <div class="lang-name">Farsi</div>
+                <div class="lang-lvl">Muttersprache</div>
+                <div class="lang-pips">
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                </div>
+              </div>
+              <div class="lang-card">
+                <div class="lang-name">Englisch</div>
+                <div class="lang-lvl">Fließend (C1)</div>
+                <div class="lang-pips">
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip"></div>
+                </div>
+              </div>
+              <div class="lang-card">
+                <div class="lang-name">Deutsch</div>
+                <div class="lang-lvl">(B1/B2)</div>
+                <div class="lang-pips">
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip"></div>
+                  <div class="pip"></div>
+                </div>
+              </div>
+              <div class="lang-card">
+                <div class="lang-name">Hindi</div>
+                <div class="lang-lvl">Grundkenntnisse</div>
+                <div class="lang-pips">
+                  <div class="pip on"></div>
+                  <div class="pip on"></div>
+                  <div class="pip"></div>
+                  <div class="pip"></div>
+                  <div class="pip"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="kontakt" style="background: white;">
+    <div class="container">
+      <div class="sec-label reveal">Kontakt</div>
+      <h2 class="sec-title reveal">Bereit für <em>Seite 1?</em></h2>
+      <div class="contact-wrap reveal">
+        <div>
+          <p class="contact-intro">Ob neue Marketingstrategie, SEO-Optimierung oder eine wirkungsvolle Kampagne — ich
+            freue mich darauf, Ihre Ziele kennenzulernen und gemeinsam die richtigen Stellschrauben zu drehen.</p>
+          <div class="contact-detail">
+            <div class="contact-icon">✉</div>
+            jawadkazimi87@gmail.com
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon">☎</div>
+            +49 176 232 94 250
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon">📍</div>
+            Berlin, Deutschland · Umzugsbereitschaft vorhanden
+          </div>
+        </div>
+        <div class="form">
+          <div class="form-row">
+            <div class="field">
+              <label class="flabel">Ihr Name</label>
+              <input class="finput" type="text" placeholder="Max Mustermann">
+            </div>
+            <div class="field">
+              <label class="flabel">Unternehmen</label>
+              <input class="finput" type="text" placeholder="Musterfirma GmbH">
+            </div>
+          </div>
+          <div class="field">
+            <label class="flabel">E-Mail</label>
+            <input class="finput" type="email" placeholder="max@musterfirma.de">
+          </div>
+          <div class="field">
+            <label class="flabel">Ihre Nachricht</label>
+            <textarea class="ftextarea" rows="4" placeholder="Womit kann ich Ihnen helfen?"></textarea>
+          </div>
+          <button class="form-submit">Nachricht senden →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Jawad Kazimi</span>
+    <span class="footer-copy">Digital Marketing Spezialist · Berlin · 2025</span>
+    <span class="footer-copy">jawadkazimi87@gmail.com</span>
+  </footer>
+
+  <script>
+    // Cursor
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('ring');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top = e.clientY + 'px';
+  setTimeout(() => { ring.style.left = e.clientX+'px'; ring.style.top = e.clientY+'px'; }, 60);
+});
+document.querySelectorAll('a,button,.proj-card,.info-card,.tl-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cur.style.width='18px'; cur.style.height='18px'; ring.style.width='56px'; ring.style.height='56px'; });
+  el.addEventListener('mouseleave', () => { cur.style.width='10px'; cur.style.height='10px'; ring.style.width='38px'; ring.style.height='38px'; });
+});
+
+// Counter
+function count(el) {
+  const t = +el.dataset.count;
+  const suf = el.classList.contains('stat-num') ? '+' : '';
+  let c = 0;
+  const iv = setInterval(() => {
+    c = Math.min(c + 1, t);
+    el.textContent = c + suf;
+    if (c >= t) clearInterval(iv);
+  }, 80);
+}
+
+// Observer
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('on');
+    e.target.querySelectorAll('[data-count]').forEach(el => count(el));
+    if (e.target.dataset.count) count(e.target);
+    e.target.querySelectorAll('.skill-fill').forEach(f => f.classList.add('on'));
+    io.unobserve(e.target);
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.reveal,.reveal-up,.metric-box').forEach(el => io.observe(el));
+document.querySelectorAll('.skills-wrap').forEach(el => io.observe(el));
+
+// Hero on load
+setTimeout(() => {
+  document.querySelectorAll('.hero .stat-num').forEach(el => count(el));
+}, 500);
+
+// Nav active
+const navLinks = document.querySelectorAll('.nav-links a');
+new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.style.color = '');
+      const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (a) a.style.color = 'var(--gold)';
+    }
+  });
+}, { threshold: 0.4 }).observe;
+document.querySelectorAll('section[id]').forEach(s => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.style.color = '');
+        const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (a) a.style.color = 'var(--gold)';
+      }
+    });
+  }, { threshold: 0.4 }).observe(s);
+});
+  </script>
+</body>
+
+</html>

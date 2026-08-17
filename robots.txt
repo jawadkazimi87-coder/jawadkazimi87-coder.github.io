@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jawadkazimi87-coder.github.io/sitemap.xml

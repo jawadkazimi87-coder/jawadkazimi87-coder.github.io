@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kazimi Digital">
+  <!-- Platzhalter-Wortmarke. Jederzeit durch das finale Logo austauschbar. -->
+  <rect width="64" height="64" rx="10" fill="#0B0A09"/>
+  <path d="M20 16v32M20 33.5 37 16M27.5 26 40 48" fill="none" stroke="#F3F0EA" stroke-width="5.5" stroke-linecap="square"/>
+  <circle cx="46" cy="19" r="5" fill="#F0A23C"/>
+</svg>
