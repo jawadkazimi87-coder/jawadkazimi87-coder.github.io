@@ -17,7 +17,9 @@
   var willReduziert = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var bewegungAn = false;
   try { bewegungAn = localStorage.getItem('bewegung') === 'an'; } catch (e) { /* ohne Speicher */ }
-  var reduced = willReduziert && !bewegungAn;
+  /* "ruhig" heißt: keine selbstlaufende Bewegung. Die Scroll-Geschichte
+     läuft weiter, denn sie bewegt sich nur, während der Besuch scrollt. */
+  var ruhig = willReduziert && !bewegungAn;
   var debug = /[?&]debug=1/.test(window.location.search);
 
   var clamp = function (v, min, max) { return v < min ? min : v > max ? max : v; };
@@ -78,7 +80,7 @@
     /* -------------------------------------------------- Video vorbereiten */
 
     function loadVideo() {
-      if (!video || reduced) {
+      if (!video) {
         if (stage) stage.classList.add('no-video');
         return;
       }
@@ -266,16 +268,6 @@
 
     /* --------------------------------------------------------------- Start */
 
-    if (reduced) {
-      if (stage) stage.classList.add('no-video');
-      beats.forEach(function (el) {
-        el.style.opacity = '1';
-        el.style.setProperty('--p', '1');
-        el.classList.add('is-active');
-      });
-      root.style.setProperty('--t', '1');
-      return;
-    }
 
     if (panel && debug) panel.hidden = false;
 
@@ -369,7 +361,7 @@
 
   function initReveal() {
     var items = document.querySelectorAll('.reveal, .node');
-    if (!('IntersectionObserver' in window) || reduced) {
+    if (!('IntersectionObserver' in window) || ruhig) {
       Array.prototype.forEach.call(items, function (el) {
         el.classList.add('is-in', 'is-lit');
       });
@@ -712,7 +704,7 @@
 
   function initStreams() {
     var host = document.querySelector('[data-streams]');
-    if (!host || reduced) return;
+    if (!host) return;
 
     var canvas = document.createElement('canvas');
     canvas.setAttribute('aria-hidden', 'true');
@@ -787,7 +779,7 @@
 
         /* Der Punkt verliert zum unteren Ende hin an Kraft, damit er nicht
            an der Abbruchkante verschwindet. */
-        var glanz = Math.sin(f * Math.PI) * (1 - Math.pow(f, 2.2));
+        var glanz = ruhig ? 0 : Math.sin(f * Math.PI) * (1 - Math.pow(f, 2.2));
         var g = ctx.createRadialGradient(px, py, 0, px, py, 26);
         var farbe = a.warm ? '122, 90, 240' : '47, 174, 132';
         g.addColorStop(0, 'rgba(' + farbe + ',' + (.5 * glanz) + ')');
@@ -803,7 +795,8 @@
         ctx.fill();
       }
 
-      if (sichtbar) anstossen();
+      /* Ohne selbstlaufende Bewegung genügt ein einziges Bild. */
+      if (sichtbar && !ruhig) anstossen();
     }
 
     function anstossen() {
@@ -991,7 +984,7 @@
 
     bauen();
 
-    if (reduced) {                 /* eine statische Ansicht genügt */
+    if (ruhig) {                   /* ein Standbild statt Drehung */
       zeichnen(0);
       return;
     }
@@ -1017,34 +1010,9 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-story]'), initStory);
   }
 
-  /* -------------------------------------------- Bewegung ein- und ausschalten */
-
-  function initBewegungsschalter() {
-    var schalter = document.querySelector('[data-motion]');
-    if (!schalter) return;
-
-    if (reduced) {
-      root.classList.add('bewegung-aus');
-      schalter.hidden = false;
-      schalter.addEventListener('click', function () {
-        try { localStorage.setItem('bewegung', 'an'); } catch (e) { /* egal */ }
-        location.reload();
-      });
-    } else if (bewegungAn && willReduziert) {
-      /* Eingeschaltet, obwohl das System es anders möchte — abschaltbar bleiben. */
-      schalter.hidden = false;
-      schalter.textContent = 'Animationen ausschalten';
-      schalter.addEventListener('click', function () {
-        try { localStorage.removeItem('bewegung'); } catch (e) { /* egal */ }
-        location.reload();
-      });
-    }
-  }
-
   function boot() {
     /* Das Skript ist da — die statische Notfassung wird nicht gebraucht. */
     root.className = root.className.replace('no-js', 'js');
-    initBewegungsschalter();
     initStories();
     initNav();
     initReveal();

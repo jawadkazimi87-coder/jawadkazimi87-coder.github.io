@@ -1758,96 +1758,42 @@ section[id] {
 /* ========================= REDUZIERTE BEWEGUNG =========================== */
 /* Statische, vollständig lesbare Fassung derselben Geschichte. */
 
-@media (prefers-reduced-motion: reduce) {html {
-    scroll-behavior: auto;
-  }
-html:not(.bewegung-an) *,
+@media (prefers-reduced-motion: reduce) {
+
+  /* Nur die selbstlaufende Bewegung wird abgeschaltet: der sich drehende
+     Globus, die wandernden Lichtpunkte, der pulsierende Punkt der Wortmarke,
+     lange Übergänge. Die Scroll-Geschichte bleibt bestehen — sie bewegt sich
+     ausschließlich, während der Besuch selbst scrollt, und ist damit keine
+     unwillkürliche Bewegung. Sie ganz zu entfernen hieße, die Seite für
+     diese Besucher zu einer anderen zu machen. */
+
+  html:not(.bewegung-an) *,
   html:not(.bewegung-an) *::before,
   html:not(.bewegung-an) *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
-html:not(.bewegung-an) .story {
-    height: auto;
+
+  html:not(.bewegung-an) {
+    scroll-behavior: auto;
   }
-html:not(.bewegung-an) .story__stage {
-    position: static;
-    height: auto;
-    overflow: visible;
+
+  html:not(.bewegung-an) .wordmark__mark,
+  html:not(.bewegung-an) .scrollcue span {
+    animation: none;
   }
-html:not(.bewegung-an) .stage__media {
-    position: relative;
-    inset: auto;
-    margin: 0 var(--gutter);
-    height: 58vh;
-    min-height: 300px;
-  }
-html:not(.bewegung-an) .stage__video,
-  html:not(.bewegung-an) .stage__vignette {
-    display: none;
-  }
-html:not(.bewegung-an) .stage__beats {
-    position: static;
-    display: block;
-    padding: clamp(2.5rem, 7vw, 5rem) var(--gutter) var(--band);
-  }
-html:not(.bewegung-an) .stage__beats {
-    color: var(--ink);
-  }
-html:not(.bewegung-an) .beat {
-    opacity: 1;
-    transform: none;
-    filter: none;
-    max-width: 68ch;
-    pointer-events: auto;
-    padding: clamp(1.8rem, 4vw, 2.8rem) 0;
-    border-top: 1px solid var(--line);
-  }
-html:not(.bewegung-an) .beat__display,
-  html:not(.bewegung-an) .beat__statement,
-  html:not(.bewegung-an) .beat__lead,
-  html:not(.bewegung-an) .beat__eyebrow {
-    text-shadow: none;
-  }
-html:not(.bewegung-an) .beat__display em,
-  html:not(.bewegung-an) .beat__lead {
-    color: var(--ink-2);
-  }
-html:not(.bewegung-an) .beat__eyebrow {
-    color: var(--ink-3);
-  }
-html:not(.bewegung-an) .beat__statement em {
-    color: var(--violet-deep);
-  }
-html:not(.bewegung-an) .beat:first-child {
-    border-top: 0;
-  }
-html:not(.bewegung-an) .beat__swap {
+
+  html:not(.bewegung-an) .reveal {
     opacity: 1;
     transform: none;
   }
-html:not(.bewegung-an) .beat__display,
-  html:not(.bewegung-an) .beat__statement {
-    font-size: clamp(1.5rem, 3.4vw, 2.4rem);
-    text-shadow: none;
-  }
-html:not(.bewegung-an) .beat__display--word {
-    font-size: clamp(1.7rem, 4vw, 2.7rem);
-  }
-html:not(.bewegung-an) .rail,
-  html:not(.bewegung-an) .scrollcue,
-  html:not(.bewegung-an) .scrub {
-    display: none;
-  }
-html:not(.bewegung-an) .reveal {
-    opacity: 1;
-    transform: none;
-  }
-html:not(.bewegung-an) .project--offset {
+
+  html:not(.bewegung-an) .project--offset {
     transform: none;
   }
 }
+
 
 /* ==========================================================================
    Unterseiten und Agenturbausteine
@@ -2735,24 +2681,7 @@ body.subpage .masthead {
 }
 
 /* Bei reduzierter Bewegung stapelt sich auch diese Geschichte statisch. */
-@media (prefers-reduced-motion: reduce) {html:not(.bewegung-an) .story--light {
-    height: auto;
-  }
-html:not(.bewegung-an) .story--light .stage__media {
-    position: relative;
-    inset: auto;
-    width: auto;
-    transform: none;
-    height: 46vh;
-    min-height: 240px;
-    margin: 0 var(--gutter);
-  }
-html:not(.bewegung-an) .story--light .stage__beats {
-    position: static;
-    width: auto;
-    padding: clamp(2rem, 5vw, 3rem) var(--gutter) 0;
-  }
-}
+
 
 /* Sehr schmale Geräte: Der Titelgrad wird zurückgenommen, damit lange
    deutsche Komposita wie „Knotenpunkt" sicher in die Zeile passen. */
@@ -2932,39 +2861,3 @@ html:not(.bewegung-an) .story--light .stage__beats {
   -webkit-backdrop-filter: none;
 }
 
-/* ==========================================================================
-   Schalter für Bewegung
-   Ist im Betriebssystem "Animationen reduzieren" aktiv, zeigt die Seite die
-   ruhige Fassung — so gehört es sich. Weil diese Einstellung aber oft
-   unbeabsichtigt an ist, kann der Besuch die Bewegung hier bewusst
-   einschalten. Die Schaltfläche erscheint nur in diesem Fall.
-   ========================================================================== */
-
-.motion-toggle {
-  position: fixed;
-  left: var(--gutter);
-  bottom: 1.1rem;
-  z-index: 210;
-  padding: .6rem 1.1rem;
-  border-radius: var(--pill);
-  border: 1px solid var(--line-strong);
-  background: rgba(255, 255, 255, .92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: var(--shadow);
-  color: var(--ink);
-  font-family: var(--face-mono);
-  font-size: .6rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.motion-toggle[hidden] {
-  display: none;
-}
-
-.motion-toggle:hover {
-  border-color: var(--violet);
-  color: var(--violet-deep);
-}
