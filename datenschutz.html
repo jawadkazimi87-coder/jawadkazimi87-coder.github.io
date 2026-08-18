@@ -1,8 +1,22 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="no-js">
 
 <head>
   <meta charset="utf-8">
+  <script>
+    /* Sofort auf "js" schalten, damit die statische Fassung nicht kurz
+       aufblitzt. Meldet sich das Story-Skript aber nicht innerhalb weniger
+       Sekunden zurück — blockiert, Ladefehler, Netz weg —, wird wieder auf
+       die statische Fassung umgestellt, damit nie leere Abschnitte
+       stehenbleiben. */
+    (function (d) {
+      var h = d.documentElement;
+      h.className = h.className.replace("no-js", "js");
+      setTimeout(function () {
+        if (!window.__siteBoot) h.className = h.className.replace("js", "no-js");
+      }, 3500);
+    })(document);
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Datenschutzerklärung | Digital Marketing</title>

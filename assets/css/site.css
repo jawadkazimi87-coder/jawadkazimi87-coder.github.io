@@ -2857,3 +2857,102 @@ body.subpage .masthead {
     padding-left: 1.35rem;
   }
 }
+
+/* ==========================================================================
+   Sicherheitsnetz ohne JavaScript
+   Die Story-Texte und die eingeblendeten Abschnitte starten unsichtbar und
+   werden per Skript sichtbar gemacht. Bleibt das Skript aus — blockiert,
+   Ladefehler, abgeschaltet —, wäre die halbe Seite leer. Diese Regeln
+   liefern in dem Fall dieselbe statische Fassung wie bei reduzierter
+   Bewegung: alles lesbar, nur ohne Bewegung.
+   ========================================================================== */
+
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.no-js .story {
+  height: auto;
+}
+
+.no-js .story__stage {
+  position: static;
+  height: auto;
+  overflow: visible;
+}
+
+.no-js .stage__media {
+  position: relative;
+  inset: auto;
+  width: auto;
+  height: 56vh;
+  min-height: 260px;
+  transform: none;
+  margin: 0 var(--gutter);
+  border-radius: var(--radius-lg);
+}
+
+.no-js .stage__video,
+.no-js .stage__vignette,
+.no-js .rail,
+.no-js .scrub,
+.no-js .scrollcue,
+.no-js .streams {
+  display: none;
+}
+
+.no-js .stage__beats {
+  position: static;
+  display: block;
+  width: auto;
+  padding: clamp(2rem, 5vw, 3rem) var(--gutter) var(--band);
+  color: var(--ink);
+}
+
+.no-js .beat {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  max-width: 68ch;
+  pointer-events: auto;
+  padding: clamp(1.6rem, 4vw, 2.6rem) 0;
+  border-top: 1px solid var(--line);
+}
+
+.no-js .beat:first-child {
+  border-top: 0;
+}
+
+.no-js .beat__display,
+.no-js .beat__statement,
+.no-js .beat__lead,
+.no-js .beat__eyebrow {
+  text-shadow: none;
+}
+
+.no-js .beat__display em,
+.no-js .beat__lead {
+  color: var(--ink-2);
+}
+
+.no-js .beat__eyebrow {
+  color: var(--ink-3);
+}
+
+.no-js .beat__statement em {
+  color: var(--violet-deep);
+}
+
+.no-js .beat__swap {
+  opacity: 1;
+  transform: none;
+}
+
+.no-js .stage__beats .btn--ghost {
+  background: var(--card);
+  color: var(--ink);
+  border-color: var(--line-strong);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}

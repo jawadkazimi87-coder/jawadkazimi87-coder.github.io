@@ -105,6 +105,44 @@
 
       video.addEventListener('error', useSource);
 
+      /* --------------------------------------------------------------
+         Das Scrubben setzt voraus, dass der Server Teilbereiche einer
+         Datei ausliefert (HTTP-Range). Tut er das nicht — oder erlaubt
+         ein Zwischenspeicher es nicht —, bleibt das Video stumm auf dem
+         ersten Bild stehen: Man sieht dann eine statische Seite.
+         Deshalb wird die Datei einmal komplett geholt und aus dem
+         Arbeitsspeicher abgespielt. Danach ist Springen immer möglich,
+         ganz gleich, wie der Server antwortet.
+         -------------------------------------------------------------- */
+      var speicherLaeuft = false;
+
+      function inSpeicherLaden(url) {
+        if (speicherLaeuft || !url || !window.fetch ||
+            !window.URL || !URL.createObjectURL) return;
+        speicherLaeuft = true;
+
+        fetch(url).then(function (antwort) {
+          if (!antwort.ok) throw new Error('HTTP ' + antwort.status);
+          return antwort.blob();
+        }).then(function (daten) {
+          var zeit = video.currentTime;
+          var neueQuelle = URL.createObjectURL(daten);
+
+          video.addEventListener('loadedmetadata', function einmal() {
+            video.removeEventListener('loadedmetadata', einmal);
+            try { video.currentTime = zeit; } catch (e) { /* ignoriert */ }
+            videoTime = zeit;
+            request();
+          });
+
+          video.src = neueQuelle;
+          video.load();
+        }).catch(function () {
+          /* Bleibt bei der direkten Quelle — besser als gar kein Video. */
+          speicherLaeuft = false;
+        });
+      }
+
       video.addEventListener('loadedmetadata', function () {
         duration = video.duration || 0;
         hasVideo = duration > 0;
@@ -113,8 +151,22 @@
           if (stage) stage.classList.remove('no-video');
           video.pause();
           request();
+          /* Erst wenn der Abschnitt in die Nähe des Sichtfelds kommt —
+             sonst lädt die zweite Geschichte unnötig mit. */
+          if (naheSichtfeld()) inSpeicherLaden(video.currentSrc);
         }
       });
+
+      function naheSichtfeld() {
+        var r = story.getBoundingClientRect();
+        return r.top < window.innerHeight * 2.5 && r.bottom > -window.innerHeight;
+      }
+
+      window.addEventListener('scroll', function () {
+        if (hasVideo && !speicherLaeuft && naheSichtfeld()) {
+          inSpeicherLaden(video.currentSrc);
+        }
+      }, { passive: true });
 
       /* iOS gibt das Suchen in einem pausierten Video erst nach einer
          Nutzerinteraktion frei. Einmal kurz anspielen genügt. */
