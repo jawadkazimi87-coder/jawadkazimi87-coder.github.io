@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Diagnose</title>
+  <style>
+    /* Bewusst alles hier drin: Diese Seite muss auch dann funktionieren,
+       wenn das Stylesheet oder das Skript der Website nicht ankommt. */
+    body { margin:0; padding:1.2rem; background:#0d0b14; color:#f2f0f7;
+           font:16px/1.5 system-ui, sans-serif; }
+    h1 { font-size:1.4rem; margin:0 0 1rem; }
+    table { width:100%; border-collapse:collapse; font-size:1.05rem; }
+    td { padding:.55rem .4rem; border-bottom:1px solid #2a2537; vertical-align:top; }
+    td:first-child { color:#a49dbb; width:42%; }
+    b { font-weight:700; }
+    .ok   { color:#4ce0a5; font-weight:700; }
+    .bad  { color:#ff6b6b; font-weight:700; }
+    .warn { color:#ffc75a; font-weight:700; }
+    #ergebnis { margin-top:1.2rem; padding:1rem; border-radius:10px;
+                background:#1a1526; font-size:1.15rem; }
+  </style>
+</head>
+
+<body>
+  <h1>Diagnose der Website</h1>
+  <table id="t"></table>
+  <div id="ergebnis">Prüfung läuft …</div>
+
+  <script>
+    var zeilen = [];
+    function zeile(name, wert, art) {
+      zeilen.push('<tr><td>' + name + '</td><td class="' + (art || '') + '">' + wert + '</td></tr>');
+      document.getElementById('t').innerHTML = zeilen.join('');
+    }
+
+    /* 1 — Systemeinstellung für Bewegung */
+    var reduziert = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    zeile('Animationen im System', reduziert ? 'ABGESCHALTET' : 'eingeschaltet',
+          reduziert ? 'bad' : 'ok');
+
+    var gespeichert = '—';
+    try { gespeichert = localStorage.getItem('bewegung') || 'nicht gesetzt'; } catch (e) { gespeichert = 'kein Zugriff'; }
+    zeile('Schalter auf der Website', gespeichert);
+
+    /* 2 — Kommen Stylesheet und Skript an? */
+    var pruef = document.createElement('div');
+    pruef.className = 'shell';
+    document.body.appendChild(pruef);
+    var cssDa = getComputedStyle(pruef).maxWidth !== 'none';
+    pruef.remove();
+
+    var s = document.createElement('script');
+    s.src = 'assets/js/story.js';
+    s.onload = function () {
+      zeile('Skript story.js', 'geladen', 'ok');
+      zeile('Skript ausgeführt', window.__siteBoot ? 'ja' : 'NEIN', window.__siteBoot ? 'ok' : 'bad');
+      pruefeVideo();
+    };
+    s.onerror = function () {
+      zeile('Skript story.js', 'NICHT ERREICHBAR', 'bad');
+      pruefeVideo();
+    };
+
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = 'assets/css/site.css';
+    l.onload = function () { zeile('Stylesheet site.css', 'geladen', 'ok'); document.head.appendChild(s); };
+    l.onerror = function () { zeile('Stylesheet site.css', 'NICHT ERREICHBAR', 'bad'); document.head.appendChild(s); };
+    document.head.appendChild(l);
+
+    /* 3 — Video: Auslieferung und Springen */
+    function pruefeVideo() {
+      var url = 'public/videos/hero-story.webm';
+      var v = document.createElement('video');
+      var kannWebm = v.canPlayType('video/webm; codecs="vp9"');
+      zeile('Browser kann WebM/VP9', kannWebm || 'NEIN', kannWebm ? 'ok' : 'warn');
+      if (!kannWebm) url = 'public/videos/hero-story.mp4';
+
+      fetch(url, { method: 'GET', headers: { Range: 'bytes=0-99' } })
+        .then(function (r) {
+          zeile('Video-Datei erreichbar', r.status + ' ' + r.statusText, r.ok ? 'ok' : 'bad');
+          zeile('Teilbereiche (Range)', r.status === 206 ? '206 — unterstützt'
+                : 'NICHT unterstützt (' + r.status + ')', r.status === 206 ? 'ok' : 'warn');
+          return fetch(url);
+        })
+        .then(function (r) { return r.blob(); })
+        .then(function (b) {
+          zeile('Video vollständig geladen', (b.size / 1048576).toFixed(2) + ' MB', 'ok');
+          var vid = document.createElement('video');
+          vid.muted = true; vid.playsInline = true;
+          vid.src = URL.createObjectURL(b);
+          vid.addEventListener('loadedmetadata', function () {
+            zeile('Videolänge', vid.duration.toFixed(2) + ' s', 'ok');
+            vid.currentTime = 4;
+            setTimeout(function () {
+              var geht = Math.abs(vid.currentTime - 4) < 1;
+              zeile('Springen im Video', geht ? vid.currentTime.toFixed(2) + ' s — funktioniert'
+                    : 'BLEIBT BEI ' + vid.currentTime.toFixed(2), geht ? 'ok' : 'bad');
+              fertig(geht);
+            }, 1200);
+          });
+          vid.addEventListener('error', function () { zeile('Video', 'Dekodierfehler', 'bad'); fertig(false); });
+        })
+        .catch(function (e) { zeile('Video-Abruf', 'FEHLER: ' + e.message, 'bad'); fertig(false); });
+
+      zeile('Bildschirmbreite', innerWidth + ' px');
+      zeile('Browser', navigator.userAgent.slice(0, 68));
+    }
+
+    function fertig(videoGeht) {
+      var t = '';
+      if (reduziert) {
+        t = '<b class="bad">Ursache gefunden:</b> In Ihrem System sind Animationen '
+          + 'abgeschaltet. Die Website zeigt deshalb absichtlich die ruhige Fassung. '
+          + 'Lösung: Windows-Einstellungen &rarr; Barrierefreiheit &rarr; Visuelle Effekte '
+          + '&rarr; Animationseffekte einschalten — oder auf der Startseite unten links '
+          + 'auf „Animationen einschalten" tippen.';
+      } else if (!videoGeht) {
+        t = '<b class="bad">Das Video lässt sich nicht durchsuchen.</b> '
+          + 'Bitte schicken Sie mir ein Foto dieser Seite.';
+      } else {
+        t = '<b class="ok">Alle Prüfungen bestanden.</b> Technisch spricht nichts gegen '
+          + 'die Animation. Bitte schicken Sie mir trotzdem ein Foto dieser Seite.';
+      }
+      document.getElementById('ergebnis').innerHTML = t;
+    }
+  </script>
+</body>
+
+</html>
