@@ -5,16 +5,17 @@
   <meta charset="utf-8">
   <script>
     /* Sofort auf "js" schalten, damit die statische Fassung nicht kurz
-       aufblitzt. Meldet sich das Story-Skript aber nicht innerhalb weniger
-       Sekunden zurück — blockiert, Ladefehler, Netz weg —, wird wieder auf
-       die statische Fassung umgestellt, damit nie leere Abschnitte
-       stehenbleiben. */
+       aufblitzt. Ob das Story-Skript wirklich ankommt, meldet der Browser
+       am Skript-Element selbst (onerror) — verlässlicher als ein Zeitgeber,
+       der bei langsamer Verbindung fälschlich auslöst.
+       Wer die Bewegung trotz Systemeinstellung sehen möchte, hat das einmal
+       bestätigt; die Entscheidung wird hier sofort angewendet. */
     (function (d) {
       var h = d.documentElement;
       h.className = h.className.replace("no-js", "js");
-      setTimeout(function () {
-        if (!window.__siteBoot) h.className = h.className.replace("js", "no-js");
-      }, 3500);
+      try {
+        if (localStorage.getItem("bewegung") === "an") h.className += " bewegung-an";
+      } catch (e) { /* ohne Speicher eben nicht */ }
     })(document);
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -205,7 +206,12 @@
     </div>
   </footer>
 
-  <script src="assets/js/story.js" defer></script>
+  <button class="motion-toggle" type="button" data-motion hidden>
+    Animationen einschalten
+  </button>
+
+  <script src="assets/js/story.js" defer
+    onerror="document.documentElement.className=document.documentElement.className.replace('js','no-js')"></script>
 </body>
 
 </html>

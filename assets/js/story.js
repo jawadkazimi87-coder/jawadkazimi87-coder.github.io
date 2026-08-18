@@ -10,7 +10,14 @@
   'use strict';
 
   var root = document.documentElement;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* Windows und macOS können Animationen systemweit abschalten. Das ist eine
+     bewusste Einstellung und wird respektiert — viele Menschen haben sie aber
+     nur aus Versehen an und sehen dann eine reglose Seite. Deshalb: Rückfall
+     wie vorgesehen, zusätzlich eine Schaltfläche zum Einschalten. */
+  var willReduziert = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bewegungAn = false;
+  try { bewegungAn = localStorage.getItem('bewegung') === 'an'; } catch (e) { /* ohne Speicher */ }
+  var reduced = willReduziert && !bewegungAn;
   var debug = /[?&]debug=1/.test(window.location.search);
 
   var clamp = function (v, min, max) { return v < min ? min : v > max ? max : v; };
@@ -1010,7 +1017,34 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-story]'), initStory);
   }
 
+  /* -------------------------------------------- Bewegung ein- und ausschalten */
+
+  function initBewegungsschalter() {
+    var schalter = document.querySelector('[data-motion]');
+    if (!schalter) return;
+
+    if (reduced) {
+      root.classList.add('bewegung-aus');
+      schalter.hidden = false;
+      schalter.addEventListener('click', function () {
+        try { localStorage.setItem('bewegung', 'an'); } catch (e) { /* egal */ }
+        location.reload();
+      });
+    } else if (bewegungAn && willReduziert) {
+      /* Eingeschaltet, obwohl das System es anders möchte — abschaltbar bleiben. */
+      schalter.hidden = false;
+      schalter.textContent = 'Animationen ausschalten';
+      schalter.addEventListener('click', function () {
+        try { localStorage.removeItem('bewegung'); } catch (e) { /* egal */ }
+        location.reload();
+      });
+    }
+  }
+
   function boot() {
+    /* Das Skript ist da — die statische Notfassung wird nicht gebraucht. */
+    root.className = root.className.replace('no-js', 'js');
+    initBewegungsschalter();
     initStories();
     initNav();
     initReveal();

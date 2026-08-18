@@ -1758,54 +1758,44 @@ section[id] {
 /* ========================= REDUZIERTE BEWEGUNG =========================== */
 /* Statische, vollständig lesbare Fassung derselben Geschichte. */
 
-@media (prefers-reduced-motion: reduce) {
-
-  html {
+@media (prefers-reduced-motion: reduce) {html {
     scroll-behavior: auto;
   }
-
-  *,
-  *::before,
-  *::after {
+html:not(.bewegung-an) *,
+  html:not(.bewegung-an) *::before,
+  html:not(.bewegung-an) *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
-
-  .story {
+html:not(.bewegung-an) .story {
     height: auto;
   }
-
-  .story__stage {
+html:not(.bewegung-an) .story__stage {
     position: static;
     height: auto;
     overflow: visible;
   }
-
-  .stage__media {
+html:not(.bewegung-an) .stage__media {
     position: relative;
     inset: auto;
     margin: 0 var(--gutter);
     height: 58vh;
     min-height: 300px;
   }
-
-  .stage__video,
-  .stage__vignette {
+html:not(.bewegung-an) .stage__video,
+  html:not(.bewegung-an) .stage__vignette {
     display: none;
   }
-
-  .stage__beats {
+html:not(.bewegung-an) .stage__beats {
     position: static;
     display: block;
     padding: clamp(2.5rem, 7vw, 5rem) var(--gutter) var(--band);
   }
-
-  .stage__beats {
+html:not(.bewegung-an) .stage__beats {
     color: var(--ink);
   }
-
-  .beat {
+html:not(.bewegung-an) .beat {
     opacity: 1;
     transform: none;
     filter: none;
@@ -1814,58 +1804,47 @@ section[id] {
     padding: clamp(1.8rem, 4vw, 2.8rem) 0;
     border-top: 1px solid var(--line);
   }
-
-  .beat__display,
-  .beat__statement,
-  .beat__lead,
-  .beat__eyebrow {
+html:not(.bewegung-an) .beat__display,
+  html:not(.bewegung-an) .beat__statement,
+  html:not(.bewegung-an) .beat__lead,
+  html:not(.bewegung-an) .beat__eyebrow {
     text-shadow: none;
   }
-
-  .beat__display em,
-  .beat__lead {
+html:not(.bewegung-an) .beat__display em,
+  html:not(.bewegung-an) .beat__lead {
     color: var(--ink-2);
   }
-
-  .beat__eyebrow {
+html:not(.bewegung-an) .beat__eyebrow {
     color: var(--ink-3);
   }
-
-  .beat__statement em {
+html:not(.bewegung-an) .beat__statement em {
     color: var(--violet-deep);
   }
-
-  .beat:first-child {
+html:not(.bewegung-an) .beat:first-child {
     border-top: 0;
   }
-
-  .beat__swap {
+html:not(.bewegung-an) .beat__swap {
     opacity: 1;
     transform: none;
   }
-
-  .beat__display,
-  .beat__statement {
+html:not(.bewegung-an) .beat__display,
+  html:not(.bewegung-an) .beat__statement {
     font-size: clamp(1.5rem, 3.4vw, 2.4rem);
     text-shadow: none;
   }
-
-  .beat__display--word {
+html:not(.bewegung-an) .beat__display--word {
     font-size: clamp(1.7rem, 4vw, 2.7rem);
   }
-
-  .rail,
-  .scrollcue,
-  .scrub {
+html:not(.bewegung-an) .rail,
+  html:not(.bewegung-an) .scrollcue,
+  html:not(.bewegung-an) .scrub {
     display: none;
   }
-
-  .reveal {
+html:not(.bewegung-an) .reveal {
     opacity: 1;
     transform: none;
   }
-
-  .project--offset {
+html:not(.bewegung-an) .project--offset {
     transform: none;
   }
 }
@@ -2756,13 +2735,10 @@ body.subpage .masthead {
 }
 
 /* Bei reduzierter Bewegung stapelt sich auch diese Geschichte statisch. */
-@media (prefers-reduced-motion: reduce) {
-
-  .story--light {
+@media (prefers-reduced-motion: reduce) {html:not(.bewegung-an) .story--light {
     height: auto;
   }
-
-  .story--light .stage__media {
+html:not(.bewegung-an) .story--light .stage__media {
     position: relative;
     inset: auto;
     width: auto;
@@ -2771,8 +2747,7 @@ body.subpage .masthead {
     min-height: 240px;
     margin: 0 var(--gutter);
   }
-
-  .story--light .stage__beats {
+html:not(.bewegung-an) .story--light .stage__beats {
     position: static;
     width: auto;
     padding: clamp(2rem, 5vw, 3rem) var(--gutter) 0;
@@ -2955,4 +2930,41 @@ body.subpage .masthead {
   border-color: var(--line-strong);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+/* ==========================================================================
+   Schalter für Bewegung
+   Ist im Betriebssystem "Animationen reduzieren" aktiv, zeigt die Seite die
+   ruhige Fassung — so gehört es sich. Weil diese Einstellung aber oft
+   unbeabsichtigt an ist, kann der Besuch die Bewegung hier bewusst
+   einschalten. Die Schaltfläche erscheint nur in diesem Fall.
+   ========================================================================== */
+
+.motion-toggle {
+  position: fixed;
+  left: var(--gutter);
+  bottom: 1.1rem;
+  z-index: 210;
+  padding: .6rem 1.1rem;
+  border-radius: var(--pill);
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, .92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  font-family: var(--face-mono);
+  font-size: .6rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.motion-toggle[hidden] {
+  display: none;
+}
+
+.motion-toggle:hover {
+  border-color: var(--violet);
+  color: var(--violet-deep);
 }
