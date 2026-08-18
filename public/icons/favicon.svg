@@ -1,6 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kazimi Digital">
-  <!-- Platzhalter-Wortmarke. Jederzeit durch das finale Logo austauschbar. -->
-  <rect width="64" height="64" rx="10" fill="#0B0A09"/>
-  <path d="M20 16v32M20 33.5 37 16M27.5 26 40 48" fill="none" stroke="#F3F0EA" stroke-width="5.5" stroke-linecap="square"/>
-  <circle cx="46" cy="19" r="5" fill="#F0A23C"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Digital Marketing">
+  <!-- Wortmarke: der Punkt aus der Kopfzeile, Violett nach Mint,
+       auf hellem Grund wie die Seite selbst. -->
+  <defs>
+    <linearGradient id="dm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7A5AF0"/>
+      <stop offset="1" stop-color="#2FAE84"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#FCFBFF"/>
+  <path d="M17 19h9c8.3 0 13.5 5 13.5 13S34.3 45 26 45h-9z" fill="none"
+        stroke="#15121C" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="47" cy="21" r="7" fill="url(#dm)"/>
 </svg>
